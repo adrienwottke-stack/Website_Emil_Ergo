@@ -1,0 +1,17 @@
+# Claude Code local tooling / skills — not part of the website
+.claude/
+
+# Large source assets not needed in the repo (optimized versions are committed)
+assets/Hero.png
+assets/dresden-hero.png
+
+# 130 MB video exceeds GitHub's 100 MB file limit.
+# Compress it (see README) and commit the smaller web version separately,
+# or track it with Git LFS.
+assets/dresden-hero.mp4
+
+# OS / editor cruft
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log
