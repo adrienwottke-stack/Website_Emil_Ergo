@@ -51,14 +51,15 @@ Echte Assets sind eingebunden: `hero-bg.jpg` (Hero, KI-Badge weggeschnitten, aus
 `founder-smiling.jpg` (Über mich), `mirror-selfie-1.jpg` (Inset), `team-mirror.jpg` +
 `team-couch.jpg` (Personal-Band), `dresden-hero.jpg` (Dresden) und `dresden-hero.mp4` (Video).
 
-> **⚠️ Video muss komprimiert werden:** `dresden-hero.mp4` ist **~130 MB**. Es lädt aktuell
-> bewusst erst per Klick (Poster = Dresden-Foto, `preload="none"`), damit die Seite schnell bleibt.
-> Vor dem Livegang zwingend verkleinern, z. B. mit ffmpeg:
+> **Video:** Das 130-MB-Original (`dresden-hero.mp4`, 6:19 min, 1080p) bleibt lokal und ist per
+> `.gitignore` vom Repo ausgeschlossen. Deployt & referenziert wird die komprimierte Web-Version
+> **`dresden-hero-web.mp4` (~22 MB, 720p, ohne Ton)** – erstellt mit:
 > ```bash
-> ffmpeg -i dresden-hero.mp4 -vf "scale=1280:-2" -c:v libx264 -crf 26 -preset slow -an dresden-hero-web.mp4
+> ffmpeg -i dresden-hero.mp4 -vf "scale=1280:-2" -c:v libx264 -crf 30 -preset medium -an -movflags +faststart dresden-hero-web.mp4
 > ```
-> Danach in `index.html` (`main.js`, `dVideo.src`) auf `dresden-hero-web.mp4` umstellen.
-> Ziel: < 6 MB. Optional: `Hero.png` (18,9 MB Original) kann gelöscht werden – genutzt wird `hero-bg.jpg`.
+> Sie lädt weiterhin erst per Klick (Poster = Dresden-Foto, `preload="none"`) und streamt dank
+> `faststart` progressiv. Wer eine leichtere Loop möchte, kann den Clip vorher kürzen (`-t 30`).
+> Optional: `Hero.png` (18,9 MB Original) kann gelöscht werden – genutzt wird `hero-bg.jpg`.
 
 ---
 

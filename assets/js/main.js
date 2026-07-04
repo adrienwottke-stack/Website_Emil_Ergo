@@ -368,7 +368,7 @@
   const dFeat = $("#dresdenFeat");
   if (dVideo && dPlay) {
     dPlay.addEventListener("click", () => {
-      if (!dVideo.src) dVideo.src = "assets/dresden-hero.mp4";
+      if (!dVideo.src) dVideo.src = "assets/dresden-hero-web.mp4";
       dVideo.setAttribute("controls", "");
       dFeat.classList.add("playing");
       dPlay.style.display = "none";
