@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Emil · Dein Team. Dein Tempo. — Dresden & Leipzig</title>
+  <meta name="description" content="Erfolg ist, mit wem du dich umgibst. Emil baut Teams in Dresden & Leipzig auf — Mentoring, echtes Team, dein Weg zu Einkommen und Freiheit. Sichere dir dein Gespräch." />
+  <meta name="theme-color" content="#F3EDE1" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Emil · Erfolg ist, mit wem du dich umgibst." />
+  <meta property="og:description" content="Kein Verkäufer. Ein Team, das dich mitzieht. Dresden & Leipzig." />
+  <meta property="og:image" content="/assets/img/og-image.jpg" />
+  <meta property="og:locale" content="de_DE" />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Zum Inhalt springen</a>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="#top" class="nav__brand" aria-label="Emil – nach oben">Emil<span class="nav__dot">.</span></a>
+      <div class="nav__actions">
+        <a class="nav__ig" href="https://instagram.com/PLATZHALTER_INSTAGRAM" target="_blank" rel="noopener" aria-label="Emil auf Instagram" data-config="instagramUrl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#termin" class="btn btn--gold nav__cta">Sichere dir dein Gespräch</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+  <span id="top"></span>
+
+  <!-- ===================== 1 · HERO (Scroll-Scrub, Beige → Navy) ===================== -->
+  <section class="hero" id="hero" aria-labelledby="hero-title">
+    <div class="hero__pin">
+      <div class="hero__bg" aria-hidden="true"></div>
+
+      <div class="hero__media" data-scrub-video>
+        <video class="scrub-video" muted playsinline preload="metadata"
+               poster="/assets/video/hero-poster.jpg"
+               data-src="/assets/video/hero-placeholder.mp4"
+               width="1920" height="1080" aria-hidden="true" tabindex="-1"></video>
+        <img class="scrub-poster" src="/assets/video/hero-poster.jpg" alt="" width="1920" height="1080" aria-hidden="true" />
+        <div class="hero__veil" aria-hidden="true"></div>
+        <div class="hero__wash" aria-hidden="true"></div>
+      </div>
+
+      <div class="container hero__content">
+        <p class="eyebrow hero__eyebrow">Dresden · Leipzig · bald bei dir</p>
+        <h1 id="hero-title" class="hero__title">
+          <span class="hero__line">Erfolg ist, mit wem</span>
+          <span class="hero__line">du dich <em>umgibst</em>.</span>
+        </h1>
+        <p class="hero__sub">Kein Verkäufer. Ein Team, das dich mitzieht.</p>
+        <div class="hero__cta">
+          <a href="#termin" class="btn btn--gold btn--lg">Sichere dir dein Gespräch</a>
+        </div>
+      </div>
+
+      <div class="hero__name" aria-hidden="true">
+        <span class="hero__letter">E</span><span class="hero__letter">M</span><span class="hero__letter">I</span><span class="hero__letter">L</span>
+      </div>
+
+      <span class="scroll-hint" aria-hidden="true"><span class="scroll-hint__bar"></span>Scroll</span>
+      <div class="grain" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- ===================== 2 · DER PUNKT (Intro-Video) ===================== -->
+  <section class="section punkt" id="punkt" aria-labelledby="punkt-title">
+    <div class="container punkt__grid">
+      <div class="punkt__body" data-reveal="left">
+        <p class="eyebrow">Der Punkt</p>
+        <h2 id="punkt-title">2 Minuten, warum das hier <em>anders</em> ist.</h2>
+        <p>Kein Skript, kein Anzugzwang, kein Blabla. Nur ich, mein Handy und die ehrliche
+        Antwort auf die Frage, warum wir tun, was wir tun.</p>
+        <a class="textlink" href="#team">Lern das Team kennen
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="punkt__media" data-reveal="right">
+        <figure class="story-frame">
+          <video id="introVideo" preload="none" playsinline width="720" height="1280"
+                 poster="/assets/video/intro-poster.jpg"
+                 data-src="/assets/video/intro-placeholder.mp4"></video>
+          <button class="story-frame__play" id="introPlay" type="button" aria-label="Intro-Video abspielen">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <figcaption class="story-frame__cap">[Platzhalter — echtes Handy-Video folgt]</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 3 · WER ICH BIN ===================== -->
+  <section class="section section--paper ich" id="ich" aria-labelledby="ich-title">
+    <div class="container ich__grid">
+      <div class="ich__media" data-reveal="left">
+        <figure class="portrait">
+          <img src="/assets/img/founder-smiling.jpg" alt="Emil, lächelnd im Porträt" loading="lazy" width="768" height="1024" />
+          <span class="portrait__frame" aria-hidden="true"></span>
+        </figure>
+      </div>
+      <div class="ich__body" data-reveal="right">
+        <p class="eyebrow">Wer ich bin</p>
+        <h2 id="ich-title">Ich bin [Emil]. Und ich hab keinen Bock auf <em>Mittelmaß</em>.</h2>
+        <p>Mit Anfang zwanzig stand ich da, wo du vielleicht gerade stehst: Bock auf mehr,
+        aber keinen Plan, wo anfangen. Heute baue ich Teams in Dresden und Leipzig auf —
+        und zeige Leuten wie dir, wie Geld, Freiheit und Weiterkommen wirklich funktionieren.</p>
+        <p>Was du von mir kriegst: Ich nehme dich ernst, ich sage dir die Wahrheit,
+        und ich lasse dich nicht allein.</p>
+
+        <ul class="werte" role="list">
+          <li class="werte__item"><span class="werte__num">01</span><div><strong>Machen &gt; Reden</strong><span>Ergebnisse zählen, nicht Absichten.</span></div></li>
+          <li class="werte__item"><span class="werte__num">02</span><div><strong>Ehrlich, auch wenn’s unbequem ist</strong><span>Du kriegst die Wahrheit, keine Show.</span></div></li>
+          <li class="werte__item"><span class="werte__num">03</span><div><strong>Team &gt; Ego</strong><span>Wir gewinnen zusammen oder gar nicht.</span></div></li>
+          <li class="werte__item"><span class="werte__num">04</span><div><strong>Feierabendbier inklusive</strong><span>Erfolg darf Spaß machen.</span></div></li>
+        </ul>
+
+        <p class="signature" aria-hidden="true">Emil</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 4 · WAS DU BEKOMMST (pinned, Navy) ===================== -->
+  <section class="section--dark bekommst" id="bekommst" aria-labelledby="bekommst-title">
+    <span class="seam seam--top" aria-hidden="true"></span>
+    <div class="bekommst__pin">
+      <div class="bekommst__bg" aria-hidden="true">
+        <img src="/assets/img/ambient-growth.jpg" alt="" loading="lazy" width="1920" height="1080" />
+      </div>
+      <div class="container bekommst__inner">
+        <div class="section-head">
+          <p class="eyebrow">Was du bekommst</p>
+          <h2 id="bekommst-title">Drei Dinge, die dir kein Studium <em>beibringt</em>.</h2>
+        </div>
+        <div class="bekommst__cards">
+          <article class="pillar" data-pillar>
+            <span class="pillar__num tnum">01</span>
+            <h3>Ein echtes Team</h3>
+            <p>Leute, die dich pushen statt bremsen. Die sich freuen, wenn du gewinnst —
+            weil wir zusammen gewinnen.</p>
+          </article>
+          <article class="pillar" data-pillar>
+            <span class="pillar__num tnum">02</span>
+            <h3>Mentoring — ich mach dich erfolgreich</h3>
+            <p>Nicht mit Theorie. 1:1, an echten Fällen, in deinem Tempo. Bis es sitzt.</p>
+          </article>
+          <article class="pillar" data-pillar>
+            <span class="pillar__num tnum">03</span>
+            <h3>Freiheit &amp; Einkommen</h3>
+            <p>Dein Kalender, dein Tempo, dein Ergebnis. Einen Deckel gibt es nicht.</p>
+          </article>
+        </div>
+        <a class="textlink" href="#termin">Klingt gut? Lass uns reden
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="grain" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- ===================== 5 · DAS TEAM (Scroll-Scrub, Navy) ===================== -->
+  <section class="section section--dark team" id="team" aria-labelledby="team-title">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Das Team</p>
+        <h2 id="team-title">Wir sitzen alle im selben Auto — und geben <em>Gas</em>.</h2>
+        <p class="lead">Studenten, Quereinsteiger, Vertriebler. Was zählt, ist Hunger:
+        Wir suchen Leute, die mehr wollen als Dienst nach Vorschrift.</p>
+      </div>
+
+      <div class="team__stage" data-scrub-video data-reveal="scale">
+        <video class="scrub-video" muted playsinline preload="metadata"
+               poster="/assets/video/team-poster.jpg"
+               data-src="/assets/video/team-placeholder.mp4"
+               width="1920" height="1080" aria-hidden="true" tabindex="-1"></video>
+        <img class="scrub-poster" src="/assets/video/team-poster.jpg" alt="" width="1920" height="1080" aria-hidden="true" />
+        <span class="team__stage-cap">[Platzhalter — echtes Team-Footage folgt]</span>
+      </div>
+
+      <div class="team__grid">
+        <figure class="team__shot" data-reveal style="--reveal-delay:0ms">
+          <img src="/assets/img/team-mirror.jpg" alt="Das Team, candid" loading="lazy" width="768" height="1024" />
+        </figure>
+        <figure class="team__shot" data-reveal style="--reveal-delay:80ms">
+          <img src="/assets/img/team-couch.jpg" alt="Das Team am Abend" loading="lazy" width="576" height="1024" />
+        </figure>
+        <figure class="team__shot team__shot--ph" data-reveal style="--reveal-delay:160ms">
+          <span>[Gruppenbild<br>folgt]</span>
+        </figure>
+      </div>
+
+      <div class="team__cta" data-reveal>
+        <a href="#termin" class="btn btn--gold btn--lg">Werde Teil des Teams</a>
+      </div>
+    </div>
+    <div class="grain" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===================== FOMO-MARQUEE ===================== -->
+  <div class="marquee section--deep" aria-hidden="true">
+    <div class="marquee__track">
+      <span class="impact">Dein Tempo · Dein Team · Dein Ding&nbsp;·&nbsp;</span>
+      <span class="impact">Dein Tempo · Dein Team · Dein Ding&nbsp;·&nbsp;</span>
+      <span class="impact">Dein Tempo · Dein Team · Dein Ding&nbsp;·&nbsp;</span>
+      <span class="impact">Dein Tempo · Dein Team · Dein Ding&nbsp;·&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- ===================== 6 · RECHENBEISPIEL (MSCI World, Navy) ===================== -->
+  <section class="section section--dark rechner" id="rechner" aria-labelledby="rechner-title">
+    <div class="container">
+      <div class="section-head center" data-reveal>
+        <p class="eyebrow eyebrow--center">Rechenbeispiel</p>
+        <h2 id="rechner-title">Was möglich ist, wenn du früh startest — und mit den <em>Richtigen</em>.</h2>
+        <p class="lead">Vier Schritte. Echte Marktdaten. Keine Märchen.</p>
+      </div>
+
+      <div class="calc" data-reveal="scale">
+        <ol class="calc__steps" role="list">
+          <!-- Schritt 1: Rate -->
+          <li class="calc__step">
+            <span class="calc__stepnum tnum">1</span>
+            <div class="calc__field">
+              <div class="calc__fieldtop">
+                <label for="i-rate">Dein monatlicher Start</label>
+                <span class="calc__val"><input id="i-rate" class="tnum" type="text" inputmode="numeric" value="25" aria-label="Monatliche Sparrate in Euro" /><span class="calc__unit">€</span></span>
+              </div>
+              <input class="slider" type="range" id="s-rate" min="10" max="500" step="5" value="25" aria-label="Monatliche Sparrate" />
+              <div class="calc__scale tnum"><span>10 €</span><span>500 €</span></div>
+              <p class="calc__hint">25 € — weniger als du für Streaming ausgibst.</p>
+            </div>
+          </li>
+          <!-- Schritt 2: Laufzeit -->
+          <li class="calc__step">
+            <span class="calc__stepnum tnum">2</span>
+            <div class="calc__field">
+              <div class="calc__fieldtop">
+                <label for="i-years">Deine Laufzeit</label>
+                <span class="calc__val"><input id="i-years" class="tnum" type="text" inputmode="numeric" value="20" aria-label="Laufzeit in Jahren" /><span class="calc__unit">Jahre</span></span>
+              </div>
+              <input class="slider" type="range" id="s-years" min="5" max="40" step="1" value="20" aria-label="Laufzeit in Jahren" />
+              <div class="calc__scale tnum"><span>5</span><span>40</span></div>
+              <p class="calc__hint">Zeit schlägt Timing. Je früher, desto brutaler der Effekt.</p>
+            </div>
+          </li>
+          <!-- Schritt 3: Rendite -->
+          <li class="calc__step">
+            <span class="calc__stepnum tnum">3</span>
+            <div class="calc__field">
+              <div class="calc__fieldtop">
+                <label id="l-yield">Deine Annahme pro Jahr</label>
+                <span class="calc__val tnum" id="v-yield">12&nbsp;%</span>
+              </div>
+              <div class="calc__presets" role="group" aria-labelledby="l-yield">
+                <button type="button" class="preset tnum" data-yield="5">5 % <small>vorsichtig</small></button>
+                <button type="button" class="preset tnum" data-yield="8">8 % <small>moderat</small></button>
+                <button type="button" class="preset tnum is-active" data-yield="12">12 % <small>MSCI World ’12–’25</small></button>
+              </div>
+              <p class="calc__hint">Der MSCI World (Welt-Aktienindex, in Euro) hat 2012–2025 im Schnitt
+              rund 12&nbsp;% pro Jahr gemacht.* Vergangenheit garantiert keine Zukunft — aber sie zeigt, was möglich war.</p>
+            </div>
+          </li>
+          <!-- Schritt 4: Ergebnis -->
+          <li class="calc__step calc__step--result">
+            <span class="calc__stepnum calc__stepnum--gold tnum">4</span>
+            <div class="calc__result">
+              <p class="calc__resultlabel">Dein mögliches Ergebnis</p>
+              <p class="calc__amount tnum" id="r-amount" aria-live="polite">0&nbsp;€</p>
+              <div class="calc__split tnum">
+                <span><i class="dot dot--paid"></i>Eingezahlt <b id="r-paid">0&nbsp;€</b></span>
+                <span><i class="dot dot--gain"></i>Marktertrag <b id="r-gain">0&nbsp;€</b></span>
+              </div>
+
+              <div class="calc__chart">
+                <svg id="chart" viewBox="0 0 560 300" role="img" aria-label="Liniendiagramm: Entwicklung von Einzahlungen und Gesamtvermögen über die Laufzeit."></svg>
+                <div class="chart-tip tnum" id="chartTip" role="status" aria-live="off"></div>
+              </div>
+
+              <p class="calc__fomo" id="r-fomo" aria-live="polite"></p>
+
+              <a href="#termin" class="btn btn--gold btn--full">Lass uns deinen Plan bauen</a>
+              <p class="calc__disclaimer"><strong>Unverbindliches Rechenbeispiel.</strong> Keine Anlage-, Steuer- oder
+              Rechtsberatung, keine Renditegarantie. Kosten &amp; Steuern nicht berücksichtigt.
+              *Quelle: MSCI World Net Total Return in EUR, Jahresrenditen 2012–2025 (Ø ≈ 12,7&nbsp;% p.&nbsp;a.).
+              Wertentwicklungen der Vergangenheit sind kein verlässlicher Indikator für die Zukunft.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+    <div class="grain" aria-hidden="true"></div>
+    <span class="seam seam--bottom" aria-hidden="true"></span>
+  </section>
+
+  <!-- ===================== 7 · WO WIR SIND ===================== -->
+  <section class="section standorte" id="standorte" aria-labelledby="standorte-title">
+    <div class="container standorte__grid">
+      <div class="standorte__body" data-reveal="left">
+        <p class="eyebrow">Wo wir sind</p>
+        <h2 id="standorte-title">Wir wachsen. Und zwar <em>hier</em>.</h2>
+        <p>Dresden ist die Home Base, Leipzig zieht nach — und die Karte
+        wird nicht kleiner. Vielleicht steht dein Name bald neben einem Pin.</p>
+        <ul class="standorte__list" role="list" id="cityList"></ul>
+      </div>
+      <div class="standorte__map" data-reveal="right" aria-label="Karte: Standorte in Deutschland">
+        <svg id="deMap" viewBox="0 0 400 520" role="img" aria-label="Stilisierte Deutschland-Karte mit Standort-Pins"></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 8 · ERFOLGSGESCHICHTEN ===================== -->
+  <section class="section section--paper stimmen" id="stimmen" aria-labelledby="stimmen-title">
+    <div class="container">
+      <div class="section-head center" data-reveal>
+        <p class="eyebrow eyebrow--center">Erfolgsgeschichten</p>
+        <h2 id="stimmen-title">Die, die schon <em>dabei</em> sind.</h2>
+        <p class="lead">Hier stehen nur echte Stimmen aus dem Team — freigegeben von echten Menschen.
+        Deshalb ist hier noch Platz. Bald auch für deine?</p>
+      </div>
+      <div class="stimmen__grid">
+        <figure class="stimme" data-reveal style="--reveal-delay:0ms">
+          <blockquote>„[Echte Stimme — wird mit Freigabe ergänzt]“</blockquote>
+          <figcaption><b>[Vorname]</b><span>[Weg, z.&nbsp;B. Quereinstieg aus der Gastro]</span></figcaption>
+        </figure>
+        <figure class="stimme" data-reveal style="--reveal-delay:80ms">
+          <blockquote>„[Echte Stimme — wird mit Freigabe ergänzt]“</blockquote>
+          <figcaption><b>[Vorname]</b><span>[Weg, z.&nbsp;B. neben dem Studium gestartet]</span></figcaption>
+        </figure>
+        <figure class="stimme" data-reveal style="--reveal-delay:160ms">
+          <blockquote>„[Echte Stimme — wird mit Freigabe ergänzt]“</blockquote>
+          <figcaption><b>[Vorname]</b><span>[Weg, z.&nbsp;B. vom Nebenjob zum eigenen Team]</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 9 · ABLAUF ===================== -->
+  <section class="section ablauf" id="ablauf" aria-labelledby="ablauf-title">
+    <div class="container">
+      <div class="section-head center" data-reveal>
+        <p class="eyebrow eyebrow--center">So läuft’s</p>
+        <h2 id="ablauf-title">Vier Schritte. Kein Kleingedrucktes.</h2>
+      </div>
+      <ol class="ablauf__steps" role="list">
+        <li class="ablauf__step" data-reveal style="--reveal-delay:0ms">
+          <span class="ablauf__num tnum">01</span>
+          <h3>Kennenlernen</h3>
+          <p>30 Minuten, locker. Du erzählst, ich höre zu.</p>
+        </li>
+        <li class="ablauf__step" data-reveal style="--reveal-delay:80ms">
+          <span class="ablauf__num tnum">02</span>
+          <h3>Dein Ziel</h3>
+          <p>Wir schauen, was du willst — und ob wir matchen.</p>
+        </li>
+        <li class="ablauf__step" data-reveal style="--reveal-delay:160ms">
+          <span class="ablauf__num tnum">03</span>
+          <h3>Einstieg</h3>
+          <p>Du startest — mit mir an deiner Seite, Schritt für Schritt.</p>
+        </li>
+        <li class="ablauf__step" data-reveal style="--reveal-delay:240ms">
+          <span class="ablauf__num tnum">04</span>
+          <h3>Gemeinsam wachsen</h3>
+          <p>Team, Kunden, Einkommen — jetzt geht’s los.</p>
+        </li>
+      </ol>
+      <div class="ablauf__cta" data-reveal>
+        <a class="textlink" href="#termin">Direkt zum Gespräch
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 10 · TERMIN / FINALE (Scroll-Scrub, Navy) ===================== -->
+  <section class="section--dark finale" id="termin" aria-labelledby="finale-title">
+    <span class="seam seam--top" aria-hidden="true"></span>
+    <div class="finale__stage">
+      <div class="finale__media" data-scrub-video>
+        <video class="scrub-video" muted playsinline preload="metadata"
+               poster="/assets/video/finale-poster.jpg"
+               data-src="/assets/video/finale-placeholder.mp4"
+               width="1920" height="1080" aria-hidden="true" tabindex="-1"></video>
+        <img class="scrub-poster" src="/assets/video/finale-poster.jpg" alt="" width="1920" height="1080" aria-hidden="true" />
+        <div class="finale__veil" aria-hidden="true"></div>
+      </div>
+
+      <div class="container finale__inner">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Dein Gespräch</p>
+          <h2 id="finale-title">Wenn du das bis hier gelesen hast,<br>ist das kein <em>Zufall</em>.</h2>
+          <p class="lead">Zwei Fragen, dann reden wir. Persönlich in Dresden/Leipzig oder per Zoom —
+          die Plätze pro Woche sind begrenzt.</p>
+        </div>
+
+        <form class="interview" id="interviewForm" data-reveal>
+          <div class="interview__q">
+            <label for="q-ort">01 — Woher kommst du?</label>
+            <input class="interview__input" id="q-ort" type="text" autocomplete="address-level2" placeholder="z. B. Dresden" maxlength="60" />
+          </div>
+
+          <fieldset class="interview__q">
+            <legend>02 — Was ist dein Ziel?</legend>
+            <div class="interview__chips" role="group">
+              <button type="button" class="chip chip--select" data-goal="Mehr Einkommen">Mehr Einkommen</button>
+              <button type="button" class="chip chip--select" data-goal="Raus aus dem 9-to-5">Raus aus dem 9-to-5</button>
+              <button type="button" class="chip chip--select" data-goal="Ein Team, das zieht">Ein Team, das zieht</button>
+              <button type="button" class="chip chip--select" data-goal="Erstmal schlau machen">Erstmal schlau machen</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="interview__q">
+            <legend>03 — Wie sprechen wir?</legend>
+            <div class="interview__chips" role="group">
+              <button type="button" class="chip chip--select chip--mode is-active" data-mode="persönlich" aria-pressed="true">Persönlich (Dresden/Leipzig)</button>
+              <button type="button" class="chip chip--select chip--mode" data-mode="Zoom" aria-pressed="false">Per Zoom</button>
+            </div>
+          </fieldset>
+
+          <div class="interview__cta">
+            <a class="btn btn--gold btn--lg btn--full" id="waButton" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.1-4.7-4-4.9-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.4l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.8 1.4 1.8 2.2 1.2 1.1 2.3 1.4 2.6 1.6.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2.1 1c.3.1.5.2.6.4 0 .1 0 .8-.2 1.5Z"/></svg>
+              Schreib mir auf WhatsApp
+            </a>
+            <a class="btn btn--ondark" id="waTermin" href="#" target="_blank" rel="noopener">Termin wählen</a>
+          </div>
+          <p class="interview__note">WhatsApp öffnet mit einer vorbereiteten Nachricht — absenden entscheidest du.
+          Deine Angaben landen nur im Nachrichtentext, nirgendwo sonst.</p>
+        </form>
+      </div>
+      <div class="grain" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ===================== 11 · FOOTER ===================== -->
+  <footer class="footer section--block">
+    <div class="container">
+      <div class="footer__main">
+        <a class="footer__ig" href="https://instagram.com/PLATZHALTER_INSTAGRAM" target="_blank" rel="noopener" data-config="instagramUrl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+          <span data-config="instagramHandle">@[instagram-handle]</span>
+        </a>
+        <p class="footer__igsub">Der schnellste Weg in meine Welt. Stories, Team, Alltag — echt statt Hochglanz.</p>
+      </div>
+      <div class="footer__meta">
+        <div class="footer__contact">
+          <a href="#" id="footerWa" data-config="waPlain">WhatsApp: [Nummer folgt]</a>
+          <a href="mailto:PLATZHALTER@MAIL.DE" data-config="email">[E-Mail folgt]</a>
+        </div>
+        <nav class="footer__legal" aria-label="Rechtliches">
+          <a href="/impressum.html">Impressum</a>
+          <a href="/datenschutz.html">Datenschutz</a>
+          <a href="/erstinformation.html">Erstinformation</a>
+        </nav>
+      </div>
+      <p class="footer__copy">© <span id="year">2026</span> Emil · [Vollständiger Name &amp; Anschrift folgen]</p>
+    </div>
+  </footer>
+</body>
+</html>
