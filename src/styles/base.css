@@ -64,9 +64,10 @@ h1 em, h2 em, .display em {
 }
 
 .on-dark h1, .on-dark h2, .on-dark h3,
-[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3 {
+.section--dark h1, .section--dark h2, .section--dark h3 {
   color: var(--on-dark);
 }
+.section--dark h1 em, .section--dark h2 em { color: var(--gold-500); }
 
 p { max-width: 62ch; }
 strong { font-weight: 600; }

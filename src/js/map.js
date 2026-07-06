@@ -75,15 +75,22 @@ export function initMap() {
     core.setAttribute("class", "core");
     g.appendChild(core);
 
+    // Labels rechts vom Pin — außer der Pin sitzt nah am rechten Kartenrand
+    const flip = loc.x > 270;
+    const lx = flip ? loc.x - 16 : loc.x + 16;
+    const anchor = flip ? "end" : "start";
+
     const label = document.createElementNS(ns, "text");
-    label.setAttribute("x", loc.x + 16);
+    label.setAttribute("x", lx);
     label.setAttribute("y", loc.y + 1);
+    label.setAttribute("text-anchor", anchor);
     label.textContent = loc.name;
     g.appendChild(label);
 
     const sub = document.createElementNS(ns, "text");
-    sub.setAttribute("x", loc.x + 16);
+    sub.setAttribute("x", lx);
     sub.setAttribute("y", loc.y + 15);
+    sub.setAttribute("text-anchor", anchor);
     sub.setAttribute("class", "sub");
     sub.textContent = loc.sub;
     g.appendChild(sub);

@@ -74,6 +74,15 @@
   position: absolute; inset: 0; z-index: 2;
   background: linear-gradient(180deg, rgba(16, 27, 40, 0.05) 0%, rgba(16, 27, 40, 0.38) 78%, rgba(16, 27, 40, 0.55) 100%);
 }
+/* Warmer Beige-Schleier: hält die Bühne hell, GSAP blendet ihn beim Scrub aus */
+.hero__wash {
+  position: absolute; inset: 0; z-index: 3;
+  background: linear-gradient(180deg,
+    rgba(243, 237, 225, 0.94) 0%,
+    rgba(243, 237, 225, 0.72) 42%,
+    rgba(243, 237, 225, 0.30) 78%,
+    rgba(243, 237, 225, 0.10) 100%);
+}
 
 .hero__content {
   position: relative;
@@ -89,9 +98,10 @@
 .hero__sub {
   margin: var(--sp-3) auto 0;
   font-size: var(--step-1);
-  font-weight: 300;
-  color: var(--ink-muted);
+  font-weight: 400;
+  color: rgba(27, 26, 23, 0.78);
 }
+.hero__pin.is-cinema .hero__sub { color: var(--on-dark-muted); }
 .hero__cta { margin-top: var(--sp-4); display: flex; justify-content: center; }
 
 /* Ab Fullbleed-Phase (GSAP togglet .is-cinema) wird die Typo hell */
@@ -483,7 +493,7 @@
   letter-spacing: 0.14em;
   color: var(--on-dark-muted);
 }
-.calc__amount {
+p.calc__amount {
   font-family: var(--font-display);
   font-size: clamp(2.6rem, 6vw, 4.2rem);
   font-weight: 600;
@@ -527,7 +537,7 @@
 .chart-tip .yr { color: var(--on-dark-muted); }
 .chart-tip.show { opacity: 1; }
 
-.calc__fomo {
+p.calc__fomo {
   background: rgba(184, 147, 61, 0.12);
   border: 1px solid rgba(184, 147, 61, 0.35);
   border-radius: var(--radius-s);
@@ -569,9 +579,25 @@
 .standorte__list b { font-weight: 600; }
 .standorte__list span { color: var(--ink-muted); font-size: var(--step--1); }
 
-.standorte__map svg { width: 100%; height: auto; }
+.standorte__map {
+  position: relative;
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  padding: var(--sp-3);
+  background: var(--beige-0);
+  border: 1px solid var(--line);
+}
+.standorte__ambient {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.12;
+  border-radius: var(--radius-l);
+}
+.standorte__map svg { position: relative; width: 100%; height: auto; }
 .standorte__map .land { fill: var(--beige-2); }
-.standorte__map .dot-land { fill: var(--gold-600); opacity: 0.16; }
+.standorte__map .dot-land { fill: var(--gold-600); opacity: 0.3; }
 .standorte__map .pin { cursor: pointer; }
 .standorte__map .pin circle.core { fill: var(--gold-600); }
 .standorte__map .pin circle.pulse {
@@ -778,7 +804,10 @@
 }
 
 @media (max-width: 640px) {
-  .nav__cta { padding: 10px 16px; }
+  .nav__inner { gap: var(--sp-1); }
+  .nav__brand { font-size: 1.45rem; }
+  .nav__cta { padding: 8px 14px; min-height: 44px; font-size: 0.78rem; }
+  .hero__eyebrow { font-size: 0.66rem; letter-spacing: 0.12em; }
   .hero { height: 220vh; }
   .hero__media { inset: clamp(64px, 10vh, 96px) 12px clamp(96px, 16vh, 140px); border-radius: var(--radius); }
   .hero__name { font-size: clamp(4rem, 22vw, 7rem); }
