@@ -1,117 +1,65 @@
-# Alexander Reinhardt · Finanzberatung Dresden
+# Emil · Recruiting-First Personal Brand — Dresden & Leipzig
 
-Elegante, statische One-Page-Website für einen selbstständigen Finanz- & Vorsorgeberater
-(Partner der ERGO) in Dresden. Bordeaux/Gold-Design, hochwertige Animationen, Zinseszins-Rechner.
+Cineastischer One-Pager für „Emil“: **Recruiting zuerst** (≈80 %), Klienten subtil (≈20 %).
+Beige · Navy · Gold, Scroll-Scrub-Videos, MSCI-World-Rechenbeispiel, WhatsApp-First-Buchung.
 
-**Kein Build nötig.** Reines HTML/CSS/JS — einfach hochladen und fertig.
+**Harte Leitplanken:** Kein „ERGO“, kein „Versicherung“, keine Vanity-Statistiken auf der
+Marketing-Fläche — Pflichtangaben leben nur auf den `noindex`-Rechtsseiten. Durchgängig **DU**.
 
-```
-Website-Ergo-Premium/
-├── index.html                 ← die komplette Seite
-├── assets/
-│   ├── css/styles.css         ← Design-System & Layout
-│   ├── js/main.js             ← Nav, Scroll-Reveal, Rechner, Formular
-│   └── img/                   ← hier deine Fotos ablegen (siehe unten)
-└── README.md
-```
+## Stack
 
-## Lokal ansehen
+- [Vite](https://vitejs.dev) (Multi-Page: `index` + 3 Rechtsseiten) → statisches `dist/` für **Cloudflare Pages**
+- [GSAP + ScrollTrigger](https://gsap.com) (Scroll-Scrub, Pins) · [Lenis](https://lenis.darkroom.engineering) (Smooth-Scroll)
+- Fonts **lokal** via Fontsource (Fraunces · Inter · Archivo) — kein Google-CDN, DSGVO-sauber
 
-Wegen der Animationen (IntersectionObserver, `fetch`-freie Logik) läuft alles auch per Doppelklick
-auf `index.html`. Sauberer ist ein kleiner lokaler Server:
+## Entwickeln
 
-```powershell
-# Variante 1: mit installiertem Node
-npx serve .
-
-# Variante 2: mit Python
-py -m http.server 8080
-# → http://localhost:8080
+```bash
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # → dist/
+npm run preview    # Production-Build lokal testen
 ```
 
----
+## Struktur
 
-## ✅ Was du VOR dem Livegang ersetzen musst
+```
+index.html               ← One-Pager (11 Sektionen)
+impressum.html           ← noindex
+datenschutz.html         ← noindex
+erstinformation.html     ← noindex (einzige ERGO-Nennung, § 15 VersVermV)
+src/
+  config.js              ← ALLE Platzhalter zentral (WhatsApp, Instagram, E-Mail, Standorte)
+  main.js / legal.js     ← Entries
+  styles/                ← tokens · base · components · sections · legal
+  js/                    ← scroll · scrub · calculator · msci-data · map · whatsapp
+public/assets/
+  img/                   ← echte Fotos (founder, team) + Ambient-Stills
+  video/                 ← Platzhalter-Loops mit FIXEN Dateinamen (s. unten)
+```
 
-Der Vorname **Emil** ist überall eingesetzt (Monogramm „E"). Offen sind nur noch Nachname
-und echte Kontaktdaten — Platzhalter sind so benannt, dass du sie per Suchen-&-Ersetzen findest.
+## ✅ Vor dem Livegang (Adrien)
 
-| Platzhalter | Wo | Ersetzen durch |
+1. **`src/config.js` füllen:** WhatsApp-Nummer, Instagram, E-Mail, Standorte.
+2. **Videos 1:1 tauschen** (Dateiname beibehalten, Code bleibt unverändert):
+
+| Slot | Datei | Später |
 |---|---|---|
-| `Emil` | überall | ggf. voller Name (Vor- + Nachname) |
-| `kontakt@emil-finanz.de` | Kontakt, `mailto:` | **echte E-Mail** (Domain noch geraten!) |
-| `+49 351 000 000 0` | Kontakt, Footer-`tel:` | echte Telefonnummer |
-| `Musterstraße 1, 01067 Dresden` | Kontakt | echte Büroadresse |
-| Kennzahlen im Hero (`12` Jahre, `450+`, `4,9`, `100%`) | `data-count`-Werte in `index.html` | deine echten Zahlen |
-| Referenzen / Testimonials | Sektion „Stimmen meiner Mandanten“ | **echte, freigegebene** Zitate |
+| Hero-Scrub | `public/assets/video/hero-placeholder.mp4` + `hero-poster.jpg` | echtes Emil/Team-Clip |
+| Intro | `public/assets/video/intro-placeholder.mp4` + `intro-poster.jpg` | echtes Handy-Video (9:16) |
+| Team-Scrub | `public/assets/video/team-placeholder.mp4` + `team-poster.jpg` | echtes Team-Footage |
+| Finale-Scrub | `public/assets/video/finale-placeholder.mp4` + `finale-poster.jpg` | Galerie/Hero-Pose |
 
-### Bilder & Video (liegen bereits in `assets/`)
+3. **Echte Stimmen** in Sektion „Erfolgsgeschichten“ (nur freigegebene Zitate!).
+4. **Rechtsseiten**: alle `[Platzhalter]` ersetzen + anwaltlich prüfen lassen.
+5. **`[Emil]`/Namens-Platzhalter** in `index.html` durch echten Namen ersetzen.
 
-Echte Assets sind eingebunden: `hero-bg.jpg` (Hero, KI-Badge weggeschnitten, aus `Hero.png`),
-`founder-smiling.jpg` (Über mich), `mirror-selfie-1.jpg` (Inset), `team-mirror.jpg` +
-`team-couch.jpg` (Personal-Band), `dresden-hero.jpg` (Dresden) und `dresden-hero.mp4` (Video).
+## Deployment (Cloudflare Pages)
 
-> **Video:** Das 130-MB-Original (`dresden-hero.mp4`, 6:19 min, 1080p) bleibt lokal und ist per
-> `.gitignore` vom Repo ausgeschlossen. Deployt & referenziert wird die komprimierte Web-Version
-> **`dresden-hero-web.mp4` (~22 MB, 720p, ohne Ton)** – erstellt mit:
-> ```bash
-> ffmpeg -i dresden-hero.mp4 -vf "scale=1280:-2" -c:v libx264 -crf 30 -preset medium -an -movflags +faststart dresden-hero-web.mp4
-> ```
-> Sie lädt weiterhin erst per Klick (Poster = Dresden-Foto, `preload="none"`) und streamt dank
-> `faststart` progressiv. Wer eine leichtere Loop möchte, kann den Clip vorher kürzen (`-t 30`).
-> Optional: `Hero.png` (18,9 MB Original) kann gelöscht werden – genutzt wird `hero-bg.jpg`.
+Build-Command `npm run build`, Output-Verzeichnis `dist`. Fertig — keine Env-Vars nötig.
 
----
+## Daten-Herkunft Rechner
 
-## 📨 Kontaktformular scharf schalten
-
-Aktuell zeigt das Formular nach dem Absenden nur eine Erfolgsmeldung (kein Versand).
-Zwei einfache Wege, echte Nachrichten zu empfangen:
-
-**A) Formspree (empfohlen, kostenlos für kleine Mengen)**
-1. Konto auf [formspree.io](https://formspree.io) anlegen, Formular-ID kopieren.
-2. In `index.html` das `<form id="contactForm" novalidate>` ergänzen:
-   `action="https://formspree.io/f/DEINE_ID" method="POST"`
-3. In `assets/js/main.js` im `submit`-Handler den `setTimeout(...)`-Block durch ein
-   `fetch(form.action, { method:'POST', body:new FormData(form), headers:{Accept:'application/json'} })`
-   ersetzen (Erfolg → `#formSuccess` einblenden).
-
-**B) Ohne Backend:** Den Submit-Button durch einen `mailto:`-Link ersetzen.
-Weniger komfortabel, aber ohne Drittanbieter.
-
----
-
-## ⚖️ Pflicht vor Veröffentlichung (Deutschland)
-
-- **Impressum** (§ 5 DDG/TMG) — Anker `#impressum` ist vorhanden, Inhalt noch leer.
-- **Datenschutzerklärung** (DSGVO) — Anker `#datenschutz`, inkl. Hinweis zu Google Fonts
-  (werden aktuell von Google geladen; für volle DSGVO-Konformität ggf. **Fonts lokal hosten** —
-  siehe unten).
-- **Erstinformation** nach § 15 VersVermV (als Vermittler).
-- **ERGO-Freigabe:** Als gebundener/Partner-Vermittler bitte prüfen, ob die ERGO-Compliance
-  die Seite freigeben muss, bevor du sie mit ERGO-Bezug veröffentlichst.
-
-### Google Fonts lokal hosten (optional, DSGVO)
-Fonts von [google-webfonts-helper](https://gwfh.mranftl.com/fonts) herunterladen
-(Cormorant Garamond + IBM Plex Sans), in `assets/fonts/` ablegen, `@font-face` in `styles.css`
-ergänzen und den `<link>`-Tag zu Google in `index.html` entfernen.
-
----
-
-## 🌐 Deployment
-
-Die Seite ist statisch — sie läuft auf jedem Webhosting oder kostenlos bei:
-
-- **Netlify / Vercel:** Ordner per Drag-&-Drop hochladen, fertig.
-- **Klassisches Webhosting (Strato, IONOS …):** Inhalt per FTP in den Web-Ordner kopieren.
-
-Eigene Domain (z. B. `reinhardt-finanz.de`) beim Anbieter verbinden.
-
----
-
-## Design-Referenz
-
-- **Farben:** Bordeaux `#5C182B`/`#7A2036`, Anthrazit `#17100F`, Gold `#C4A052`/`#D4B86C`, Ivory `#FCFAF5`
-- **Schrift:** Cormorant Garamond (Headlines) · IBM Plex Sans (Fließtext)
-- **Animation:** Scroll-Reveal, Count-up, animiertes SVG-Chart — alle `prefers-reduced-motion`-fest
-- **A11y:** Fokus-Ringe, aria-Labels, Kontrast ≥ 4.5:1, Tastaturbedienung, Skip-Link
+`src/js/msci-data.js`: MSCI World **Net Total Return in EUR**, Jahresrenditen **2012–2025**
+(verifiziert; Ø ≈ 12,7 % p. a.). Real-Check & Ø-Aussagen rechnen live aus dieser Serie.
+Label „Unverbindliches Rechenbeispiel“ bleibt Pflicht.

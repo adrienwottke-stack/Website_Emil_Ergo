@@ -1,0 +1,66 @@
+/* =========================================================================
+   EMIL · Design Tokens — Option A: Beige · Navy · Gold
+   Beige ist die Bühne (~80 %), Navy sind die filmischen Momente,
+   Gold der einzige Akzent.
+   ========================================================================= */
+:root {
+  /* Flächen — hell/warm */
+  --beige-0: #F7F1E6;   /* hellste Fläche / Karten */
+  --beige-1: #F3EDE1;   /* Grundfläche */
+  --beige-2: #E4D9C4;   /* abgesetzte Blöcke */
+
+  /* Dark Sections — Navy */
+  --navy-900: #101B28;  /* tiefste dunkle Fläche */
+  --navy-800: #17263A;  /* primäre Dark-Section (Rechner, Team) */
+  --navy-700: #22374F;  /* erhöhte Elemente auf Navy */
+
+  /* Akzent — Gold */
+  --gold-600: #B8933D;  /* Primär-Akzent: CTA, Zahlen, Eyebrows */
+  --gold-500: #C9A75A;  /* Hover / Licht-Sweep */
+  --gold-300: #E3CE97;  /* dezente Linien / Glow */
+
+  /* Text */
+  --ink: #1B1A17;
+  --ink-muted: #6A6152;
+  --on-dark: #F3EDE1;
+  --on-dark-muted: rgba(243, 237, 225, 0.62);
+
+  /* Linien & Fokus */
+  --line: rgba(27, 26, 23, 0.10);
+  --line-on-dark: rgba(243, 237, 225, 0.14);
+  --ring: rgba(184, 147, 61, 0.55);
+
+  /* Typografie */
+  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-body: "Inter Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-impact: "Archivo Variable", "Arial Narrow", sans-serif;
+
+  /* Fluid type scale */
+  --step--1: clamp(0.82rem, 0.79rem + 0.15vw, 0.92rem);
+  --step-0:  clamp(1rem, 0.96rem + 0.18vw, 1.10rem);
+  --step-1:  clamp(1.20rem, 1.10rem + 0.5vw, 1.45rem);
+  --step-2:  clamp(1.55rem, 1.35rem + 1.0vw, 2.10rem);
+  --step-3:  clamp(2.00rem, 1.65rem + 1.7vw, 3.00rem);
+  --step-4:  clamp(2.55rem, 2.0rem + 2.8vw, 4.40rem);
+  --step-hero: clamp(3.2rem, 2.2rem + 5vw, 6.0rem);
+
+  /* 8pt-Raster */
+  --sp-1: 8px;  --sp-2: 16px; --sp-3: 24px; --sp-4: 32px;
+  --sp-5: 48px; --sp-6: 64px; --sp-7: 96px; --sp-8: 128px;
+
+  --container: 1180px;
+  --radius-s: 10px;
+  --radius: 18px;
+  --radius-l: 28px;
+
+  --shadow-sm: 0 1px 2px rgba(27, 26, 23, 0.05), 0 2px 8px rgba(27, 26, 23, 0.04);
+  --shadow-md: 0 10px 30px -12px rgba(16, 27, 40, 0.22), 0 4px 12px rgba(27, 26, 23, 0.05);
+  --shadow-lg: 0 30px 70px -24px rgba(16, 27, 40, 0.35);
+  --shadow-gold: 0 10px 32px -10px rgba(184, 147, 61, 0.45);
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 260ms;
+
+  --nav-h: 76px;
+}
