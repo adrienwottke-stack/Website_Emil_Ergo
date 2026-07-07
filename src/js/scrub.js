@@ -6,7 +6,8 @@
    ========================================================================= */
 import { gsap, ScrollTrigger, prefersReduced, isCoarse } from "./scroll.js";
 
-const LERP = 0.14;
+const LERP = 0.2;
+const HALF_FRAME = 1 / 48; // Quell-Clips laufen mit 24 fps
 
 function attachSource(video) {
   if (!video.src && video.dataset.src) video.src = video.dataset.src;
@@ -75,20 +76,26 @@ export function initVideoScrub(container, options = {}) {
 
   const onMeta = () => {
     duration = Math.max(video.duration - 0.06, 0.01);
+    // Decoder aufwecken, damit der erste Scrub-Seek nicht hakt
+    try { video.currentTime = 0.001; } catch { /* noop */ }
   };
   if (video.readyState >= 1) onMeta();
   else video.addEventListener("loadedmetadata", onMeta, { once: true });
 
   const tick = () => {
-    if (!duration || !video.isConnected) return;
+    if (!video.isConnected) { gsap.ticker.remove(tick); ticking = false; return; }
+    if (!duration) return;
     current += (target - current) * LERP;
     if (Math.abs(target - current) < 0.004) {
       current = target;
       gsap.ticker.remove(tick);
       ticking = false;
     }
-    // seekable prüfen — bei fehlendem Video passiert einfach nichts
-    try { video.currentTime = current; } catch { /* noop */ }
+    // Nie in einen laufenden Seek hineinfeuern — gestaute Seeks sind das Ruckeln.
+    // Unterhalb einer halben Frame-Dauer gibt es ohnehin kein neues Bild.
+    if (!video.seeking && Math.abs(video.currentTime - current) > HALF_FRAME) {
+      try { video.currentTime = current; } catch { /* noop */ }
+    }
   };
 
   const st = ScrollTrigger.create({
@@ -130,12 +137,15 @@ export function initHero() {
   // Video-Scrub über die gesamte Hero-Strecke
   initVideoScrub(media, { trigger: hero, start: "top top", end: "bottom bottom" });
 
-  // Ziel-Scale, damit der Rahmen den Viewport voll abdeckt
-  const coverScale = () => {
-    const r = media.getBoundingClientRect();
-    const w = r.width / (gsap.getProperty(media, "scaleX") || 1);
-    const h = r.height / (gsap.getProperty(media, "scaleY") || 1);
-    return Math.max(window.innerWidth / w, window.innerHeight / h) * 1.02;
+  // Start-Clip aus der realen Frame-Geometrie ablesen (Pixel; resize-fest,
+  // weil invalidateOnRefresh die Funktion neu auswertet). Der Frame-Div wird
+  // nie geclippt/transformiert und ist damit die stabile Referenz.
+  const frame = hero.querySelector(".hero__frame");
+  const radius = getComputedStyle(document.documentElement).getPropertyValue("--radius-l").trim() || "28px";
+  const clipStart = () => {
+    const pr = pin.getBoundingClientRect();
+    const fr = (frame || media).getBoundingClientRect();
+    return `inset(${Math.max(fr.top - pr.top, 0)}px ${Math.max(pr.right - fr.right, 0)}px ${Math.max(pr.bottom - fr.bottom, 0)}px ${Math.max(fr.left - pr.left, 0)}px round ${radius})`;
   };
 
   const tl = gsap.timeline({
@@ -144,13 +154,16 @@ export function initHero() {
       start: "top top",
       end: "bottom bottom",
       scrub: 0.6,
+      invalidateOnRefresh: true,
       onUpdate: (self) => pin.classList.toggle("is-cinema", self.progress > 0.42),
     },
   });
 
+  // Bühne → Fullbleed nur über clip-path (kompositierbar, kein Repaint des Videos)
   tl.fromTo(media,
-    { scale: 1, borderRadius: "var(--radius-l)" },
-    { scale: coverScale, borderRadius: 0, ease: "power2.inOut", duration: 0.55 }, 0);
+    { clipPath: clipStart },
+    { clipPath: "inset(0px 0px 0px 0px round 0px)", ease: "power2.inOut", duration: 0.55 }, 0);
+  if (frame) tl.to(frame, { autoAlpha: 0, ease: "none", duration: 0.28 }, 0.08);
   if (wash) tl.to(wash, { opacity: 0, ease: "none", duration: 0.45 }, 0.05);
   // Intro-Copy räumt die Bühne, bevor der Name landet — im Kino gehört das Bild der Person
   const content = hero.querySelector(".hero__content");
@@ -163,7 +176,12 @@ export function initHero() {
     duration: 0.35,
   }, 0.42);
 
-  window.addEventListener("resize", () => ScrollTrigger.refresh());
+  // Refresh gebündelt statt bei jedem Resize-Event
+  let resizeT;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(() => ScrollTrigger.refresh(), 200);
+  });
 }
 
 /* =========================================================================

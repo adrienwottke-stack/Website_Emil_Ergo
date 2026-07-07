@@ -48,17 +48,32 @@
   height: 100svh;
   overflow: clip;
   display: grid;
+  /* Rahmen der Start-Bühne — von Frame-Div und Media-Clip gemeinsam genutzt */
+  --frame-t: clamp(72px, 12vh, 120px);
+  --frame-x: clamp(16px, 6vw, 96px);
+  --frame-b: clamp(120px, 20vh, 200px);
 }
 .hero__bg { position: absolute; inset: 0; background: var(--beige-1); }
+
+/* Schattenträger der gerahmten Bühne: blendet nur per Opacity aus —
+   der Schatten wird so nie mitskaliert/neu gerastert */
+.hero__frame {
+  position: absolute;
+  z-index: 0;
+  inset: var(--frame-t) var(--frame-x) var(--frame-b);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-lg);
+  will-change: opacity;
+}
 
 .hero__media {
   position: absolute;
   z-index: 1;
-  /* Start: gerahmte Bühne — GSAP weitet auf Fullbleed */
-  inset: clamp(72px, 12vh, 120px) clamp(16px, 6vw, 96px) clamp(120px, 20vh, 200px);
-  border-radius: var(--radius-l);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  /* Immer Fullbleed — die gerahmte Bühne entsteht per clip-path (kompositierbar),
+     GSAP fährt den Clip auf 0. Video bleibt in nativer Auflösung, kein Scale. */
+  inset: 0;
+  clip-path: inset(var(--frame-t) var(--frame-x) var(--frame-b) round var(--radius-l));
+  will-change: clip-path;
   transform: translateZ(0);
 }
 .hero__media .scrub-video,
