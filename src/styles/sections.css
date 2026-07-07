@@ -598,10 +598,13 @@ p.calc__fomo {
 }
 .standorte__body .eyebrow { margin-bottom: var(--sp-2); }
 .standorte__body > p { color: var(--ink-muted); margin-top: var(--sp-3); }
-.standorte__list { list-style: none; padding: 0; margin: var(--sp-4) 0 0; display: grid; gap: 10px; }
+.standorte__list {
+  list-style: none; padding: 0; margin: var(--sp-4) 0 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
 .standorte__list li {
   display: flex; align-items: center; gap: 12px;
-  padding: 12px 16px;
+  padding: 10px 14px;
   min-height: 52px;
   border: 1px solid var(--line);
   border-radius: var(--radius-s);
@@ -667,8 +670,19 @@ p.calc__fomo {
   font-size: 13px;
   font-weight: 600;
   fill: var(--ink);
+  /* Referenz-Stil: Pins pur — Name erscheint beim Hover/Fokus/Listen-Hover */
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+  pointer-events: none;
 }
+.standorte__map .pin--primary text,
+.standorte__map .pin--soon text,
+.standorte__map .pin:hover text,
+.standorte__map .pin:focus-visible text,
+.standorte__map .pin.is-active text { opacity: 1; }
 .standorte__map .pin .sub { font-weight: 400; font-size: 11px; fill: var(--ink-muted); }
+.standorte__map .pin:hover circle.core,
+.standorte__map .pin.is-active circle.core { fill: var(--gold-500); }
 .standorte__map .pin--soon circle.core { fill: none; stroke: var(--gold-600); stroke-width: 1.5; stroke-dasharray: 3 3; }
 .standorte__map .pin--soon circle.pulse { display: none; }
 
