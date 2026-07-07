@@ -152,6 +152,9 @@ export function initHero() {
     { scale: 1, borderRadius: "var(--radius-l)" },
     { scale: coverScale, borderRadius: 0, ease: "power2.inOut", duration: 0.55 }, 0);
   if (wash) tl.to(wash, { opacity: 0, ease: "none", duration: 0.45 }, 0.05);
+  // Intro-Copy räumt die Bühne, bevor der Name landet — im Kino gehört das Bild der Person
+  const content = hero.querySelector(".hero__content");
+  if (content) tl.to(content, { autoAlpha: 0, y: -50, ease: "power2.in", duration: 0.22 }, 0.34);
   tl.to(letters, {
     opacity: 1,
     y: 0,
