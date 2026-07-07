@@ -1,30 +1,9 @@
 /* =========================================================================
-   EMIL · Standorte — stilisierte Deutschland-Punktkarte (SVG) + Pins
-   Umriss stark vereinfacht; das Punktraster macht die Karte bewusst
-   grafisch statt geografisch exakt.
+   EMIL · Standorte — Deutschland-Karte mit echten Bundesländer-Grenzen,
+   Ost-Region hervorgehoben, Pins aus CONFIG (Lon/Lat, auto-projiziert).
    ========================================================================= */
 import { CONFIG } from "../config.js";
-
-/* Vereinfachter Deutschland-Umriss im 400×520-ViewBox (x rechts, y runter) */
-const OUTLINE = [
-  [131, 32], [178, 63], [218, 90], [281, 63], [317, 51], [348, 94],
-  [346, 162], [364, 174], [370, 207], [364, 223], [380, 254], [352, 269],
-  [356, 278], [301, 303], [273, 321], [281, 340], [333, 414], [301, 487],
-  [269, 481], [222, 493], [190, 500], [166, 487], [127, 481], [87, 484],
-  [83, 426], [52, 383], [40, 364], [28, 328], [24, 288], [28, 260],
-  [22, 220], [52, 205], [64, 186], [52, 174], [71, 131], [67, 106],
-  [103, 106], [123, 94], [139, 94], [127, 69], [115, 32],
-];
-
-function pointInPolygon(x, y, poly) {
-  let inside = false;
-  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
-    const [xi, yi] = poly[i];
-    const [xj, yj] = poly[j];
-    if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
-  }
-  return inside;
-}
+import { STATES, project } from "./de-states.js";
 
 export function initMap() {
   const svg = document.getElementById("deMap");
@@ -34,25 +13,22 @@ export function initMap() {
   const ns = "http://www.w3.org/2000/svg";
   const frag = document.createDocumentFragment();
 
-  // Punktraster im Umriss
-  const SPACING = 13;
-  const dots = document.createElementNS(ns, "g");
-  for (let y = 24; y < 512; y += SPACING) {
-    for (let x = 16; x < 392; x += SPACING) {
-      if (pointInPolygon(x, y, OUTLINE)) {
-        const c = document.createElementNS(ns, "circle");
-        c.setAttribute("cx", x);
-        c.setAttribute("cy", y);
-        c.setAttribute("r", 2.1);
-        c.setAttribute("class", "dot-land");
-        dots.appendChild(c);
-      }
-    }
-  }
-  frag.appendChild(dots);
+  // Bundesländer — unsere Region (Osten) trägt Gold
+  const lands = document.createElementNS(ns, "g");
+  STATES.forEach((st) => {
+    const p = document.createElementNS(ns, "path");
+    p.setAttribute("d", st.d);
+    p.setAttribute("class", "land" + (st.east ? " land--east" : ""));
+    const t = document.createElementNS(ns, "title");
+    t.textContent = st.name;
+    p.appendChild(t);
+    lands.appendChild(p);
+  });
+  frag.appendChild(lands);
 
   // Pins + Liste
-  CONFIG.locations.forEach((loc, idx) => {
+  CONFIG.locations.forEach((rawLoc, idx) => {
+    const loc = { ...rawLoc, ...project(rawLoc.lon, rawLoc.lat) };
     const g = document.createElementNS(ns, "g");
     g.setAttribute("class", "pin" + (loc.soon ? " pin--soon" : ""));
     g.setAttribute("data-city", idx);
@@ -75,21 +51,24 @@ export function initMap() {
     core.setAttribute("class", "core");
     g.appendChild(core);
 
-    // Labels rechts vom Pin — außer der Pin sitzt nah am rechten Kartenrand
+    // Labels rechts vom Pin; nahe am rechten Rand links; optional zentriert
+    // über dem Pin (above) für dichte Ecken wie Sachsen
     const flip = loc.x > 270;
-    const lx = flip ? loc.x - 16 : loc.x + 16;
-    const anchor = flip ? "end" : "start";
+    const lx = loc.above ? loc.x : flip ? loc.x - 16 : loc.x + 16;
+    const anchor = loc.above ? "middle" : flip ? "end" : "start";
+    const ly = loc.above ? loc.y - 24 : loc.y + 1;
+    const sy = loc.above ? loc.y - 10 : loc.y + 15;
 
     const label = document.createElementNS(ns, "text");
     label.setAttribute("x", lx);
-    label.setAttribute("y", loc.y + 1);
+    label.setAttribute("y", ly);
     label.setAttribute("text-anchor", anchor);
     label.textContent = loc.name;
     g.appendChild(label);
 
     const sub = document.createElementNS(ns, "text");
     sub.setAttribute("x", lx);
-    sub.setAttribute("y", loc.y + 15);
+    sub.setAttribute("y", sy);
     sub.setAttribute("text-anchor", anchor);
     sub.setAttribute("class", "sub");
     sub.textContent = loc.sub;

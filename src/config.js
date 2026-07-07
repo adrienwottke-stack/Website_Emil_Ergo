@@ -15,10 +15,11 @@ export const CONFIG = {
   // Kontakt — [Platzhalter]
   email: "PLATZHALTER@MAIL.DE",
 
-  // Standorte für Karte + Liste (x/y = Koordinaten im 400×520-ViewBox)
+  // Standorte für Karte + Liste (echte Lon/Lat — Pins werden automatisch
+  // auf die Bundesländer-Karte projiziert; einfach Städte ergänzen)
   locations: [
-    { name: "Dresden", sub: "Home Base", x: 330, y: 269 },
-    { name: "Leipzig", sub: "Standort", x: 276, y: 251 },
-    { name: "[Dein Standort?]", sub: "bald — vielleicht mit dir", x: 317, y: 179, soon: true },
+    { name: "Dresden", sub: "Home Base", lon: 13.7373, lat: 51.0504 },
+    { name: "Leipzig", sub: "Standort", lon: 12.3731, lat: 51.3397, above: true },
+    { name: "[Dein Standort?]", sub: "bald — vielleicht mit dir", lon: 13.405, lat: 52.52, soon: true },
   ],
 };

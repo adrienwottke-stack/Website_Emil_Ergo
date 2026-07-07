@@ -631,8 +631,22 @@ p.calc__fomo {
   border-radius: var(--radius-l);
 }
 .standorte__map svg { position: relative; width: 100%; height: auto; }
-.standorte__map .land { fill: var(--beige-2); }
-.standorte__map .dot-land { fill: var(--gold-600); opacity: 0.3; }
+.standorte__map .land {
+  fill: var(--beige-2);
+  stroke: var(--beige-0);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+}
+.standorte__map .land--east { fill: rgba(184, 147, 61, 0.32); }
+.standorte__credit {
+  position: absolute;
+  right: 14px;
+  bottom: 8px;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  color: var(--ink-muted);
+  opacity: 0.75;
+}
 .standorte__map .pin { cursor: pointer; }
 .standorte__map .pin circle.core { fill: var(--gold-600); }
 .standorte__map .pin circle.pulse {
