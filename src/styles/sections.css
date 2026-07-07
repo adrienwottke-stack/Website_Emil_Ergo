@@ -10,12 +10,18 @@
   z-index: 50;
   padding-block: 14px;
   transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
-    padding var(--dur) var(--ease);
+    padding var(--dur) var(--ease), transform 380ms var(--ease), opacity 380ms var(--ease);
 }
 .nav.scrolled {
   background: rgba(243, 237, 225, 0.96);
   box-shadow: 0 1px 0 var(--line), var(--shadow-sm);
   padding-block: 8px;
+}
+/* Während der Hero-Kino-Phase räumt die Nav die Bühne */
+.nav.nav--hidden {
+  transform: translateY(-110%);
+  opacity: 0;
+  pointer-events: none;
 }
 .nav__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
 .nav__brand {
@@ -75,12 +81,26 @@
   clip-path: inset(var(--frame-t) var(--frame-x) var(--frame-b) round var(--radius-l));
   will-change: clip-path;
   transform: translateZ(0);
+  /* Studio-Backdrop: verlängert den dunklen Set-Hintergrund dort, wo das
+     16:9-Bild den Viewport nicht füllt (Letterbox statt Kopf-Beschnitt) */
+  background: linear-gradient(100deg, #191410 0%, #0e0e10 32%, #0c0d11 68%, #0c111a 100%);
 }
 .hero__media .scrub-video,
 .hero__media .scrub-poster {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
-  object-fit: cover;
+  /* Ganzes Bild, nie vertikal beschnitten — GSAP skaliert von "passt ins
+     Bühnenfenster" auf "volle Viewport-Höhe" */
+  object-fit: contain;
+  will-change: transform;
+}
+/* Breiter als 16:9: Bildkanten weich in den Studio-Backdrop auslaufen lassen */
+@media (min-aspect-ratio: 16/9) {
+  .hero__media .scrub-video,
+  .hero__media .scrub-poster {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+  }
 }
 .scrub-poster { z-index: 0; }
 .scrub-video { z-index: 1; }

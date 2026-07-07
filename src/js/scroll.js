@@ -41,7 +41,7 @@ export function initScroll() {
 
   // Nav-Zustand
   const nav = document.getElementById("nav");
-  const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 40);
+  const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
