@@ -15,6 +15,9 @@ html {
   html { scroll-behavior: auto; }
 }
 
+/* Offenes Nav-Overlay: Seite hinter dem Menü einfrieren */
+html.nav-lock { overflow: hidden; }
+
 body {
   font-family: var(--font-body);
   font-size: var(--step-0);
@@ -78,7 +81,8 @@ strong { font-weight: 600; }
   margin-inline: auto;
 }
 .section {
-  padding-block: clamp(64px, 9vw, 128px);
+  /* „Schlichter": Luft ist das Statussymbol — großzügiger vertikaler Rhythmus */
+  padding-block: clamp(80px, 11vw, 152px);
   position: relative;
 }
 .section--dark {

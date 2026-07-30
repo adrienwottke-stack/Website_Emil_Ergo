@@ -13,38 +13,51 @@ export function initWhatsApp() {
   const form = document.getElementById("interviewForm");
   if (!form) return;
 
-  const ortInput = document.getElementById("q-ort");
+  const ortChips = form.querySelectorAll("[data-ort]");
   const goalChips = form.querySelectorAll("[data-goal]");
   const modeChips = form.querySelectorAll("[data-mode]");
   const waButton = document.getElementById("waButton");
-  const waTermin = document.getElementById("waTermin");
 
   const state = { ort: "", goals: new Set(), mode: "persönlich" };
 
+  const MODE_PHRASE = {
+    "persönlich": "persönlich sprechen",
+    Videocall: "per Videocall sprechen",
+    schreiben: "erst mal hier schreiben",
+  };
+
   const buildMessage = () => {
-    const parts = ["Hey Emil! 👋"];
-    if (state.ort) parts.push(`Ich komme aus ${state.ort}.`);
-    if (state.goals.size) parts.push(`Mein Ziel: ${[...state.goals].join(" + ")}.`);
-    parts.push(
-      state.mode === "Zoom"
-        ? "Lass uns per Zoom sprechen — wann passt es dir?"
-        : "Lass uns persönlich sprechen (Dresden/Leipzig) — wann passt es dir?"
-    );
+    const parts = ["Hey Emil!"];
+    if (state.ort === "Woanders") parts.push("Ich komme nicht direkt aus Dresden oder Leipzig.");
+    else if (state.ort) parts.push(`Ich komme aus ${state.ort}.`);
+    if (state.goals.size) parts.push(`Mir geht's gerade vor allem um: ${[...state.goals].join(", ")}.`);
+    parts.push(`Am liebsten würde ich ${MODE_PHRASE[state.mode]}.`);
     return parts.join(" ");
   };
 
   const refresh = () => {
     waButton.href = waLink(buildMessage());
-    waTermin.href = waLink(
-      `Hey Emil! Ich will direkt einen Termin ausmachen (${state.mode}). Welche Slots hast du diese Woche frei?`
-    );
   };
 
-  ortInput.addEventListener("input", () => {
-    state.ort = ortInput.value.trim().slice(0, 60);
-    refresh();
+  // Frage 1: Ort — Einfachauswahl, nochmal tippen wählt ab
+  ortChips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const ort = chip.dataset.ort;
+      const wasActive = chip.classList.contains("is-active");
+      ortChips.forEach((c) => {
+        c.classList.remove("is-active");
+        c.setAttribute("aria-pressed", "false");
+      });
+      state.ort = wasActive ? "" : ort;
+      if (!wasActive) {
+        chip.classList.add("is-active");
+        chip.setAttribute("aria-pressed", "true");
+      }
+      refresh();
+    });
   });
 
+  // Frage 2: Ziele — Mehrfachauswahl
   goalChips.forEach((chip) => {
     chip.addEventListener("click", () => {
       const goal = chip.dataset.goal;
@@ -59,6 +72,7 @@ export function initWhatsApp() {
     });
   });
 
+  // Frage 3: Gesprächsform — Einfachauswahl mit Default
   modeChips.forEach((chip) => {
     chip.addEventListener("click", () => {
       modeChips.forEach((c) => {

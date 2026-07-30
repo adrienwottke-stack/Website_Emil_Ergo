@@ -126,6 +126,7 @@ export function initHero() {
   const wash = hero.querySelector(".hero__wash");
   const letters = hero.querySelectorAll(".hero__letter");
   const frame = hero.querySelector(".hero__frame");
+  const mid = hero.querySelector(".hero__mid");
   const vids = media.querySelectorAll(".scrub-video, .scrub-poster");
   const navEl = document.getElementById("nav");
 
@@ -198,16 +199,22 @@ export function initHero() {
     { y: 0, scale: () => fit().sEnd, ease: "power2.inOut", duration: 0.55 }, 0);
   if (frame) tl.to(frame, { autoAlpha: 0, ease: "none", duration: 0.28 }, 0.08);
   if (wash) tl.to(wash, { opacity: 0, ease: "none", duration: 0.45 }, 0.05);
-  // Intro-Copy räumt die Bühne, bevor der Name landet — im Kino gehört das Bild der Person
+  // Phase 1 (Vision-Frage) räumt die Bühne, bevor das Kino übernimmt
   const content = hero.querySelector(".hero__content");
-  if (content) tl.to(content, { autoAlpha: 0, y: -50, ease: "power2.in", duration: 0.22 }, 0.34);
+  if (content) tl.to(content, { autoAlpha: 0, y: -50, ease: "power2.in", duration: 0.16 }, 0.30);
+  // Phase 2: Zwischenzeile atmet im Kino — rein, halten, raus
+  if (mid) {
+    tl.fromTo(mid, { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, ease: "power2.out", duration: 0.10 }, 0.50);
+    tl.to(mid, { autoAlpha: 0, y: -24, ease: "power2.in", duration: 0.08 }, 0.74);
+  }
+  // Phase 3: der Name landet als Schlussbild
   tl.to(letters, {
     opacity: 1,
     y: 0,
-    stagger: 0.06,
+    stagger: 0.015,
     ease: "power3.out",
-    duration: 0.35,
-  }, 0.42);
+    duration: 0.10,
+  }, 0.88);
 
   // Refresh gebündelt statt bei jedem Resize-Event
   let resizeT;
@@ -217,35 +224,5 @@ export function initHero() {
   });
 }
 
-/* =========================================================================
-   Was du bekommst: Pin + Karten scrubben nacheinander über den Hintergrund
-   ========================================================================= */
-export function initPillars() {
-  const section = document.getElementById("bekommst");
-  if (!section) return;
-  const pinEl = section.querySelector(".bekommst__pin");
-  const cards = section.querySelectorAll("[data-pillar]");
-  const bg = section.querySelector(".bekommst__bg img");
-
-  if (prefersReduced || isCoarse) {
-    // Ohne Pin: Karten einfach sichtbar
-    cards.forEach((c) => { c.style.opacity = 1; c.style.transform = "none"; });
-    return;
-  }
-
-  gsap.set(cards, { opacity: 0, y: 60 });
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: pinEl,
-      start: "top top",
-      end: "+=180%",
-      pin: true,
-      scrub: 0.5,
-    },
-  });
-  if (bg) tl.fromTo(bg, { scale: 1.12 }, { scale: 1, ease: "none", duration: 3 }, 0);
-  cards.forEach((card, i) => {
-    tl.to(card, { opacity: 1, y: 0, ease: "power2.out", duration: 0.8 }, 0.3 + i * 0.85);
-  });
-}
+/* „Möglichkeiten" ist bewusst ungepinnt — die Karten laufen über die
+   normalen data-reveal-Einblendungen aus scroll.js. */

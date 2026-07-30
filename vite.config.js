@@ -8,6 +8,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: page("index.html"),
+        rechner: page("rechner.html"),
         impressum: page("impressum.html"),
         datenschutz: page("datenschutz.html"),
         erstinformation: page("erstinformation.html"),

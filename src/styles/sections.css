@@ -1,6 +1,7 @@
 /* =========================================================================
-   EMIL · Sections — Nav, Hero, Punkt, Ich, Bekommst, Team, Rechner,
-   Standorte, Stimmen, Ablauf, Finale, Footer
+   EMIL · Sections — Nav, Hero, Ich, Punkt (Über uns), Team, Bekommst,
+   Rechner-Teaser, Standorte, Stimmen, Ablauf, Finale, Footer
+   + Rechner-Unterseite (rechner.html)
    ========================================================================= */
 
 /* ===================== NAV ===================== */
@@ -42,7 +43,152 @@
 }
 .nav__ig:hover { color: var(--gold-600); transform: translateY(-2px); }
 .nav__ig svg { width: 22px; height: 22px; }
-.nav__cta { min-height: 48px; padding: 10px 22px; font-size: var(--step--1); }
+.nav__cta {
+  min-height: 48px; padding: 10px 22px; font-size: var(--step--1);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
+    background var(--dur) var(--ease), color var(--dur) var(--ease),
+    opacity var(--dur) var(--ease);
+}
+/* Ganz oben trägt die Hero-Bühne ihren eigenen CTA — der Nav-CTA kommt erst mit dem Scroll */
+.nav:not(.scrolled) .nav__cta {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur) var(--ease), visibility 0s linear var(--dur);
+}
+
+/* --- Nav-Menü: Desktop-Links, ab 1080px Burger + Overlay --- */
+.nav__brand, .nav__actions { position: relative; z-index: 2; }
+.nav__menu { display: flex; align-items: center; }
+.nav__links {
+  display: flex; align-items: center;
+  gap: clamp(16px, 2vw, 30px);
+  list-style: none; margin: 0; padding: 0;
+}
+.nav__link {
+  position: relative;
+  display: inline-block;
+  padding: 6px 2px;
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  transition: color var(--dur) var(--ease);
+}
+.nav__link::after {
+  content: "";
+  position: absolute; left: 2px; right: 2px; bottom: 2px;
+  height: 1.5px;
+  background: var(--gold-600);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms var(--ease);
+}
+.nav__link:hover { color: var(--gold-600); }
+.nav__link:hover::after,
+.nav__link.is-current::after,
+.nav__link[aria-current="page"]::after { transform: scaleX(1); }
+.nav__link.is-current,
+.nav__link[aria-current="page"] { color: var(--gold-600); }
+.nav__menu-extra { display: none; }
+
+.nav__burger {
+  display: none;
+  width: 44px; height: 44px;
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px;
+  color: var(--ink);
+  transition: color var(--dur) var(--ease);
+}
+.nav__burger span {
+  width: 22px; height: 2px; border-radius: 2px;
+  background: currentColor;
+  transition: transform 320ms var(--ease);
+}
+
+@media (max-width: 1080px) {
+  .nav__burger { display: inline-flex; }
+
+  /* Vollflächiges Navy-Overlay; Brand + Burger schweben darüber (z-index 2).
+     Transition nur über menu-open/menu-closing — sonst blitzt das Overlay
+     beim Fenster-Resize über die Breakpoint-Grenze sichtbar auf. */
+  .nav__menu {
+    position: fixed; inset: 0; z-index: 1;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: clamp(88px, 14vh, 128px) max(var(--sp-4), 7vw) clamp(32px, 6vh, 56px);
+    background: var(--navy-900);
+    opacity: 0; visibility: hidden;
+  }
+  .nav.menu-open .nav__menu {
+    opacity: 1; visibility: visible;
+    transition: opacity 420ms var(--ease);
+  }
+  .nav.menu-closing .nav__menu {
+    transition: opacity 420ms var(--ease), visibility 0s linear 420ms;
+  }
+
+  .nav__links {
+    flex-direction: column; align-items: flex-start;
+    gap: clamp(10px, 2.6vh, 22px);
+    counter-reset: navi;
+  }
+  .nav__links li {
+    counter-increment: navi;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 460ms var(--ease), transform 460ms var(--ease);
+  }
+  .nav.menu-open .nav__links li { opacity: 1; transform: none; }
+  .nav.menu-open .nav__links li:nth-child(1) { transition-delay: 70ms; }
+  .nav.menu-open .nav__links li:nth-child(2) { transition-delay: 130ms; }
+  .nav.menu-open .nav__links li:nth-child(3) { transition-delay: 190ms; }
+  .nav.menu-open .nav__links li:nth-child(4) { transition-delay: 250ms; }
+  .nav.menu-open .nav__links li:nth-child(5) { transition-delay: 310ms; }
+
+  .nav__link {
+    display: inline-flex; align-items: baseline; gap: 14px;
+    padding: 4px 0;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--on-dark);
+  }
+  .nav__link::before {
+    content: counter(navi, decimal-leading-zero);
+    font-family: var(--font-body);
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em;
+    color: var(--gold-500);
+  }
+  .nav__link::after { display: none; }
+  .nav__link:hover,
+  .nav__link.is-current,
+  .nav__link[aria-current="page"] { color: var(--gold-500); }
+
+  .nav__menu-extra {
+    display: flex; flex-direction: column; align-items: flex-start;
+    gap: var(--sp-2);
+    margin-top: clamp(28px, 6vh, 48px);
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 460ms var(--ease), transform 460ms var(--ease);
+  }
+  .nav.menu-open .nav__menu-extra { opacity: 1; transform: none; transition-delay: 370ms; }
+  .nav__menu-ig { color: var(--on-dark-muted); font-size: var(--step--1); transition: color var(--dur) var(--ease); }
+  .nav__menu-ig:hover { color: var(--gold-500); }
+
+  /* Offenes Menü: Header wird transparent, Brand & Burger hell, Rest weicht */
+  .nav.menu-open { background: transparent; box-shadow: none; }
+  .nav.menu-open .nav__brand,
+  .nav.menu-open .nav__burger { color: var(--on-dark); }
+  .nav.menu-open .nav__ig,
+  .nav.menu-open .nav__cta { opacity: 0; visibility: hidden; }
+  .nav.menu-open .nav__burger span:first-child { transform: translateY(4px) rotate(45deg); }
+  .nav.menu-open .nav__burger span:last-child { transform: translateY(-4px) rotate(-45deg); }
+}
+
+/* Schmale Screens: IG-Icon weicht aus der Leiste (bleibt im Overlay & Footer) */
+@media (max-width: 480px) {
+  .nav__ig { display: none; }
+}
 
 /* Auf Navy-Abschnitten bleibt die Nav lesbar, weil sie ab Scroll beige hinterlegt ist */
 
@@ -130,19 +276,34 @@
 .hero__eyebrow::after { content: ""; width: 26px; height: 1.5px; background: var(--gold-600); }
 .hero__title { color: var(--ink); text-wrap: balance; }
 .hero__line { display: block; }
-.hero__sub {
-  margin: var(--sp-3) auto 0;
-  font-size: var(--step-1);
-  font-weight: 400;
-  color: rgba(27, 26, 23, 0.78);
-}
-.hero__pin.is-cinema .hero__sub { color: var(--on-dark-muted); }
-.hero__cta { margin-top: var(--sp-4); display: flex; justify-content: center; }
 
 /* Ab Fullbleed-Phase (GSAP togglet .is-cinema) wird die Typo hell */
 .hero__pin.is-cinema .hero__title,
 .hero__pin.is-cinema .hero__line { color: var(--on-dark); }
-.hero__pin.is-cinema .hero__sub { color: var(--on-dark-muted); }
+
+/* Phase 2: Zwischenzeile im Kino — GSAP blendet ein/aus */
+.hero__mid {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  padding-inline: var(--sp-3);
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.hero__mid p {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--step-3);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--on-dark);
+  text-shadow: 0 2px 28px rgba(16, 27, 40, 0.5);
+  max-width: 22ch;
+}
 
 /* Name buchstabenweise */
 .hero__name {
@@ -191,6 +352,32 @@
 @keyframes hintPulse {
   0%, 100% { transform: scaleX(0.35); opacity: 0.5; }
   50% { transform: scaleX(1); opacity: 1; }
+}
+
+/* ===================== 1b · DIE THESE (Auflösung des Heros) ===================== */
+.these { text-align: center; }
+.these__inner { display: grid; justify-items: center; }
+.these h2 { max-width: 18ch; }
+.these__sub {
+  margin-top: var(--sp-3);
+  font-size: var(--step-1);
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--ink-muted);
+  max-width: 48ch;
+}
+.these__cta {
+  margin-top: var(--sp-5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+}
+.these__note {
+  margin-top: var(--sp-3);
+  font-size: var(--step--1);
+  color: var(--ink-muted);
 }
 
 /* ===================== 2 · DER PUNKT ===================== */
@@ -263,24 +450,27 @@
 .ich__body h2 { margin-bottom: var(--sp-3); }
 .ich__body > p { color: var(--ink-muted); margin-bottom: var(--sp-2); }
 
-.werte {
+/* Grundsätze: schlichte Liste statt Karten — nur Linien und Luft */
+.grundsaetze {
   list-style: none;
   padding: 0;
   margin: var(--sp-4) 0 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--sp-3);
 }
-.werte__item { display: flex; gap: 14px; align-items: flex-start; }
-.werte__num {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--gold-600);
-  padding-top: 2px;
+.grundsaetze li {
+  padding-block: var(--sp-2);
+  border-top: 1px solid var(--line);
 }
-.werte__item strong { display: block; font-size: var(--step-0); }
-.werte__item span { color: var(--ink-muted); font-size: var(--step--1); }
+.grundsaetze li:last-child { border-bottom: 1px solid var(--line); }
+.grundsaetze strong { display: block; font-size: var(--step-0); }
+.grundsaetze span { color: var(--ink-muted); font-size: var(--step--1); }
+
+.ich__abbinder {
+  margin-top: var(--sp-4);
+  font-style: italic;
+  font-size: var(--step--1);
+  line-height: 1.7;
+  color: var(--ink-muted);
+}
 
 .signature {
   margin-top: var(--sp-4);
@@ -291,47 +481,30 @@
   font-variation-settings: "opsz" 40, "SOFT" 100, "WONK" 1;
 }
 
-/* ===================== 4 · WAS DU BEKOMMST (pinned) ===================== */
-.bekommst { position: relative; background: var(--navy-800); }
-.bekommst__pin { position: relative; min-height: 100svh; display: grid; align-items: center; overflow: clip; }
-.bekommst__bg { position: absolute; inset: 0; z-index: 0; }
-.bekommst__bg img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  opacity: 0.35;
-}
-.bekommst__bg::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, var(--navy-800) 0%, rgba(23, 38, 58, 0.55) 45%, var(--navy-800) 100%);
-}
-.bekommst__inner { position: relative; z-index: 2; padding-block: clamp(64px, 9vw, 128px); }
+/* ===================== 4 · MÖGLICHKEITEN (hell, ruhig, ohne Pin) ===================== */
 .bekommst__cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--sp-3);
-  margin-block: var(--sp-5);
 }
 .pillar {
-  background: rgba(34, 55, 79, 0.72);
-  border: 1px solid var(--line-on-dark);
+  background: var(--beige-0);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: var(--sp-4);
-  color: var(--on-dark);
 }
 .pillar__num {
   display: block;
   font-family: var(--font-display);
   font-size: 2.2rem;
   font-weight: 600;
-  color: var(--gold-500);
+  color: var(--gold-600);
   margin-bottom: var(--sp-2);
 }
-.pillar h3 { color: var(--on-dark); margin-bottom: 10px; }
-.pillar p { color: var(--on-dark-muted); font-size: var(--step--1); line-height: 1.6; }
+.pillar h3 { margin-bottom: 10px; }
+.pillar p { color: var(--ink-muted); font-size: var(--step--1); line-height: 1.6; }
 
-/* ===================== 5 · TEAM ===================== */
-.team { background: var(--navy-800); }
+/* ===================== 5 · TEAM (hell — nur die Video-Bühne bleibt dunkel) ===================== */
 .team__stage {
   position: relative;
   border-radius: var(--radius-l);
@@ -364,44 +537,42 @@
   border-radius: var(--radius);
   overflow: hidden;
   aspect-ratio: 3 / 4;
-  background: var(--navy-700);
+  background: var(--beige-2);
 }
 .team__shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease-out); }
 .team__shot:hover img { transform: scale(1.04); }
 .team__shot--ph {
   display: grid; place-items: center;
-  border: 1.5px dashed var(--line-on-dark);
-  color: var(--on-dark-muted);
+  border: 1.5px dashed rgba(27, 26, 23, 0.22);
+  background: transparent;
+  color: var(--ink-muted);
   font-size: var(--step--1);
   text-align: center;
   letter-spacing: 0.06em;
 }
-.team__cta { display: flex; justify-content: center; margin-top: var(--sp-5); }
+.team__note {
+  margin: var(--sp-4) auto 0;
+  text-align: center;
+  font-size: var(--step--1);
+  color: var(--ink-muted);
+}
 
-/* ===================== MARQUEE ===================== */
-.marquee {
-  position: relative;
-  overflow: clip;
-  padding-block: clamp(20px, 3vw, 34px);
-  border-block: 1px solid var(--line-on-dark);
+/* ===================== LEITSATZ (stehende Zeile statt Laufband) ===================== */
+.leitsatz {
+  background: var(--beige-1);
+  padding-block: clamp(80px, 12vh, 136px);
 }
-.marquee__track {
-  display: flex;
-  width: max-content;
-  animation: marquee 26s linear infinite;
-}
-.marquee .impact {
-  font-size: clamp(1.6rem, 3.4vw, 2.6rem);
-  color: transparent;
-  -webkit-text-stroke: 1px var(--gold-500);
-  white-space: nowrap;
-}
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-25%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .marquee__track { animation: none; }
+.leitsatz__line {
+  margin-inline: auto;
+  max-width: 26ch;
+  text-align: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-variation-settings: "opsz" 60, "SOFT" 80, "WONK" 1;
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  line-height: 1.25;
+  color: var(--gold-600);
 }
 
 /* ===================== 6 · RECHNER ===================== */
@@ -589,6 +760,39 @@ p.calc__fomo {
   max-width: none;
 }
 
+/* ===================== 6b · RECHNER-TEASER (→ /rechner.html) ===================== */
+.rechner-teaser {
+  position: relative;
+  padding-block: clamp(56px, 7vw, 92px);
+}
+.rechner-teaser__inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+}
+.rechner-teaser__body { max-width: 640px; }
+.rechner-teaser .eyebrow { margin-bottom: var(--sp-2); }
+.rechner-teaser__body .lead { margin-top: var(--sp-2); }
+.rechner-teaser__cta {
+  flex-shrink: 0;
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+}
+.rechner-teaser__note {
+  font-size: var(--step--1);
+  color: var(--ink-muted);
+}
+@media (max-width: 640px) {
+  .rechner-teaser__cta { width: 100%; }
+}
+
+/* ===================== RECHNER-UNTERSEITE (rechner.html) ===================== */
+.rechner-intro { padding-block: clamp(120px, 16vh, 176px) 0; }
+.rechner-intro h1 { font-size: var(--step-3); line-height: 1.08; }
+/* Ohne Hero-Bühne gibt es oben keinen Ersatz-CTA — der Nav-CTA bleibt sichtbar */
+.page-rechner .nav .nav__cta { opacity: 1; visibility: visible; }
+
 /* ===================== 7 · STANDORTE ===================== */
 .standorte__grid {
   display: grid;
@@ -616,6 +820,12 @@ p.calc__fomo {
 .standorte__list .pinico--soon { background: transparent; border: 1.5px dashed var(--gold-600); }
 .standorte__list b { font-weight: 600; }
 .standorte__list span { color: var(--ink-muted); font-size: var(--step--1); }
+.standorte__note {
+  margin-top: var(--sp-3);
+  font-style: italic;
+  font-size: var(--step--1);
+  color: var(--ink-muted);
+}
 
 .standorte__map {
   position: relative;
@@ -719,6 +929,14 @@ p.calc__fomo {
   line-height: 0.6;
   color: var(--gold-600);
 }
+.stimmen__abbinder {
+  margin: var(--sp-4) auto 0;
+  text-align: center;
+  font-style: italic;
+  font-size: var(--step--1);
+  color: var(--ink-muted);
+  max-width: none;
+}
 
 /* ===================== 9 · ABLAUF ===================== */
 .ablauf { background: var(--beige-1); }
@@ -747,7 +965,14 @@ p.calc__fomo {
 }
 .ablauf__step h3 { margin-block: 8px 6px; }
 .ablauf__step p { color: var(--ink-muted); font-size: var(--step--1); }
-.ablauf__cta { display: flex; justify-content: center; margin-top: var(--sp-5); }
+.ablauf__abbinder {
+  margin: var(--sp-5) auto 0;
+  text-align: center;
+  font-style: italic;
+  font-size: var(--step--1);
+  color: var(--ink-muted);
+  max-width: none;
+}
 
 /* ===================== 10 · FINALE ===================== */
 .finale { position: relative; background: var(--navy-900); }
@@ -784,18 +1009,6 @@ p.calc__fomo {
   font-size: var(--step-0);
   padding: 0;
 }
-.interview__input {
-  width: 100%;
-  min-height: 56px;
-  padding: 14px 18px;
-  border-radius: var(--radius-s);
-  border: 1.5px solid var(--line-on-dark);
-  background: rgba(16, 27, 40, 0.5);
-  color: var(--on-dark);
-  transition: border-color var(--dur) var(--ease);
-}
-.interview__input::placeholder { color: rgba(243, 237, 225, 0.35); }
-.interview__input:focus { outline: none; border-color: var(--gold-500); }
 .interview__chips { display: flex; flex-wrap: wrap; gap: 10px; }
 
 .chip--select {
@@ -837,7 +1050,13 @@ p.calc__fomo {
   padding-top: var(--sp-4);
   border-top: 1px solid var(--line);
 }
+.footer__contactwrap { display: grid; gap: 2px; }
 .footer__contact { display: flex; gap: var(--sp-3); flex-wrap: wrap; }
+.footer__hint {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--ink-muted);
+}
 .footer__contact a, .footer__legal a {
   display: inline-flex;
   align-items: center;
@@ -872,6 +1091,8 @@ p.calc__fomo {
   .nav__cta { padding: 8px 14px; min-height: 44px; font-size: 0.78rem; }
   .hero__eyebrow { font-size: 0.66rem; letter-spacing: 0.12em; }
   .hero { height: 220vh; }
+  /* Titel muss in das gerahmte Bühnenfenster passen — zwei ruhige Zeilen */
+  .hero__title { font-size: clamp(2.05rem, 9vw, 2.6rem); }
   .hero__media { inset: clamp(64px, 10vh, 96px) 12px clamp(96px, 16vh, 140px); border-radius: var(--radius); }
   .hero__name { font-size: clamp(4rem, 22vw, 7rem); }
   .team__grid { grid-template-columns: 1fr; }

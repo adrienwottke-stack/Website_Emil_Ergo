@@ -181,7 +181,7 @@ export function initCalculator() {
     out.fomo.innerHTML =
       `<b>Warten kostet:</b> Startest du erst in 5 Jahren, fehlen dir am Ende ≈ ${eur0.format(waitCost)}.<br>` +
       `<b>Real-Check:</b> ${num.format(v.rate)} €/Monat seit ${MSCI_FIRST_YEAR} mit den echten MSCI-World-Jahresrenditen ` +
-      `(bis ${MSCI_LAST_YEAR}) wären heute ≈ ${eur0.format(real.total)} — eingezahlt: ${eur0.format(real.paid)}.`;
+      `(bis ${MSCI_LAST_YEAR}) wären heute ≈ ${eur0.format(real.total)} - eingezahlt: ${eur0.format(real.paid)}.`;
   }
 
   // Slider ↔ Eingabefeld synchron halten

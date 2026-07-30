@@ -12,14 +12,15 @@ import "./styles/components.css";
 import "./styles/sections.css";
 
 import { initScroll } from "./js/scroll.js";
-import { initVideoScrub, initHero, initPillars } from "./js/scrub.js";
+import { initNav } from "./js/nav.js";
+import { initVideoScrub, initHero } from "./js/scrub.js";
 import { initCalculator } from "./js/calculator.js";
 import { initMap } from "./js/map.js";
 import { initWhatsApp, applyConfig } from "./js/whatsapp.js";
 
 initScroll();
+initNav();
 initHero();
-initPillars();
 initCalculator();
 initMap();
 initWhatsApp();
