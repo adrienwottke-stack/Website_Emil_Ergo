@@ -13,7 +13,7 @@ import "./styles/sections.css";
 
 import { initScroll } from "./js/scroll.js";
 import { initNav } from "./js/nav.js";
-import { initVideoScrub, initHero } from "./js/scrub.js";
+import { initVideoLoop, initHero } from "./js/scrub.js";
 import { initCalculator } from "./js/calculator.js";
 import { initMap } from "./js/map.js";
 import { initWhatsApp, applyConfig } from "./js/whatsapp.js";
@@ -26,13 +26,10 @@ initMap();
 initWhatsApp();
 applyConfig();
 
-/* Team- und Finale-Video scrubben über ihre Sichtbarkeits-Strecke */
-document.querySelectorAll(".team__stage[data-scrub-video]").forEach((el) =>
-  initVideoScrub(el, { start: "top 85%", end: "bottom 15%" })
-);
-document.querySelectorAll(".finale__media[data-scrub-video]").forEach((el) =>
-  initVideoScrub(el, { trigger: el.closest(".finale"), start: "top 90%", end: "bottom top" })
-);
+/* Team- und Finale-Video laufen als leiser Loop, sobald sie sichtbar sind —
+   scroll-gekoppelt froren sie beim Stehenbleiben mitten im Clip ein */
+document.querySelectorAll(".team__stage[data-scrub-video], .finale__media[data-scrub-video]")
+  .forEach((el) => initVideoLoop(el));
 
 /* Intro-Video: Klick-to-Play — nichts lädt, bevor der Nutzer es will */
 const introVideo = document.getElementById("introVideo");

@@ -46,9 +46,19 @@ function initLoop(container, video) {
   io.observe(container);
 }
 
+/** Sichtbarkeitsgesteuerter Autoplay-Loop — für Bühnen, die einfach laufen sollen. */
+export function initVideoLoop(container) {
+  const video = container.querySelector(".scrub-video");
+  if (!video) return;
+  if (prefersReduced) return; // Poster reicht
+  initLoop(container, video);
+}
+
 /**
  * Scrub eines Videos über einen Scroll-Bereich.
- * options: { trigger, start, end } — ScrollTrigger-Parameter.
+ * options: { trigger, start, end, finishAt } — ScrollTrigger-Parameter;
+ * finishAt < 1 lässt das Video schon bei diesem Scroll-Anteil sein Ende
+ * erreichen, damit der Schlussframe steht, bevor die Sektion released.
  * Gibt den ScrollTrigger zurück (oder null bei Degradation).
  */
 export function initVideoScrub(container, options = {}) {
@@ -98,6 +108,8 @@ export function initVideoScrub(container, options = {}) {
     }
   };
 
+  const finishAt = Math.min(Math.max(options.finishAt || 1, 0.05), 1);
+
   const st = ScrollTrigger.create({
     trigger: options.trigger || container,
     start: options.start || "top bottom",
@@ -105,7 +117,7 @@ export function initVideoScrub(container, options = {}) {
     scrub: true,
     onUpdate: (self) => {
       if (!duration) return;
-      target = self.progress * duration;
+      target = Math.min(self.progress / finishAt, 1) * duration;
       if (!ticking) {
         ticking = true;
         gsap.ticker.add(tick);
@@ -160,8 +172,9 @@ export function initHero() {
     return;
   }
 
-  // Video-Scrub über die gesamte Hero-Strecke
-  initVideoScrub(media, { trigger: hero, start: "top top", end: "bottom bottom" });
+  // Video-Scrub über die Hero-Strecke — Orbit endet, wenn der Name landet
+  // (finishAt 0.85), damit das Schlussbild steht statt abzureißen
+  initVideoScrub(media, { trigger: hero, start: "top top", end: "bottom bottom", finishAt: 0.85 });
 
   // Start-Clip aus der realen Frame-Geometrie ablesen (Pixel; resize-fest,
   // weil invalidateOnRefresh die Funktion neu auswertet). Der Frame-Div wird
