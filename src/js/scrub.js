@@ -229,12 +229,8 @@ export function initHero() {
     duration: 0.10,
   }, 0.88);
 
-  // Refresh gebündelt statt bei jedem Resize-Event
-  let resizeT;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeT);
-    resizeT = setTimeout(() => ScrollTrigger.refresh(), 200);
-  });
+  // Neu vermessen übernimmt der zentrale Resize-Wächter aus scroll.js —
+  // er ignoriert die URL-Leisten-Resizes auf dem Handy.
 }
 
 /* „Möglichkeiten" ist bewusst ungepinnt — die Karten laufen über die

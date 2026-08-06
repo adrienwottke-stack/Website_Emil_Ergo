@@ -52,8 +52,8 @@ export function initCalculator() {
   const tip = $("#chartTip");
 
   const controls = {
-    rate: { slider: $("#s-rate"), input: $("#i-rate"), min: 10, max: 500 },
-    years: { slider: $("#s-years"), input: $("#i-years"), min: 5, max: 40 },
+    rate: { slider: $("#s-rate"), input: $("#i-rate"), min: 25, max: 2500 },
+    years: { slider: $("#s-years"), input: $("#i-years"), min: 5, max: 63 },
   };
   const out = { amount: $("#r-amount"), paid: $("#r-paid"), gain: $("#r-gain"), fomo: $("#r-fomo") };
   const yieldLabel = $("#v-yield");

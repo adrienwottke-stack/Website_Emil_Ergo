@@ -31,19 +31,6 @@ applyConfig();
 document.querySelectorAll(".team__stage[data-scrub-video], .finale__media[data-scrub-video]")
   .forEach((el) => initVideoLoop(el));
 
-/* Intro-Video: Klick-to-Play — nichts lädt, bevor der Nutzer es will */
-const introVideo = document.getElementById("introVideo");
-const introPlay = document.getElementById("introPlay");
-if (introVideo && introPlay) {
-  introPlay.addEventListener("click", () => {
-    if (!introVideo.src) introVideo.src = introVideo.dataset.src;
-    introVideo.setAttribute("controls", "");
-    introVideo.closest(".story-frame").classList.add("playing");
-    const p = introVideo.play();
-    if (p && p.catch) p.catch(() => {});
-  });
-}
-
 /* Footer-Jahr */
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();

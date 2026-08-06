@@ -2,7 +2,6 @@
    EMIL · Scroll-Grundlage — Lenis Smooth-Scroll + GSAP ScrollTrigger,
    Scroll-Reveals, Nav-Zustand, Anker-Navigation
    ========================================================================= */
-import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -15,15 +14,44 @@ export { gsap, ScrollTrigger };
 
 export let lenis = null;
 
+/* Mobile Browser feuern beim Scrollen laufend „resize", weil die URL-Leiste
+   ein- und ausfährt. Jeder Refresh würde die gepinnte Hero-Sektion neu
+   vermessen und die Scrollposition verschieben — genau das Springen.
+   Darum: nur bei echter Breitenänderung neu vermessen (Orientierungswechsel,
+   Desktop-Resize). Höhen-only-Resizes auf Touch werden ignoriert. */
+let lastW = window.innerWidth;
+let lastH = window.innerHeight;
+let refreshT = 0;
+export function refreshOnResize() {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  const widthChanged = w !== lastW;
+  const heightChanged = h !== lastH;
+  lastW = w;
+  lastH = h;
+  if (!widthChanged && (isCoarse || !heightChanged)) return;
+  clearTimeout(refreshT);
+  refreshT = setTimeout(() => ScrollTrigger.refresh(), 250);
+}
+
 export function initScroll() {
-  if (!prefersReduced) {
-    lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  // ScrollTrigger soll ebenfalls nicht auf die URL-Leisten-Resizes reagieren
+  ScrollTrigger.config({ ignoreMobileResize: true });
+  window.addEventListener("resize", refreshOnResize, { passive: true });
+
+  // Auf Touch scrollt das System selbst am saubersten — Lenis kämpft dort
+  // gegen das native Momentum-Scrolling und reißt die Seite zurück.
+  // Darum gar nicht erst laden (spart auf dem Handy zusätzlich den Bundle-Teil).
+  if (!prefersReduced && !isCoarse) {
+    import("lenis").then(({ default: Lenis }) => {
+      lenis = new Lenis({
+        duration: 1.1,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
     });
-    lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add((time) => lenis.raf(time * 1000));
-    gsap.ticker.lagSmoothing(0);
   }
 
   // Anker sanft anfahren (Lenis übernimmt, sonst nativ)

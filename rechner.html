@@ -32,6 +32,7 @@
           <li><a class="nav__link" href="/#bekommst">Möglichkeiten</a></li>
           <li><a class="nav__link" href="/#standorte">Standorte</a></li>
           <li><a class="nav__link" href="/#ablauf">Ablauf</a></li>
+          <li><a class="nav__link nav__link--page" href="/rechner.html" aria-current="page">Zinsrechner</a></li>
         </ul>
         <div class="nav__menu-extra">
           <a href="/#termin" class="btn btn--ondark btn--lg">Schreib Emil</a>
@@ -79,8 +80,8 @@
                 <label for="i-rate">Dein monatlicher Start</label>
                 <span class="calc__val"><input id="i-rate" class="tnum" type="text" inputmode="numeric" value="25" aria-label="Monatliche Sparrate in Euro" /><span class="calc__unit">€</span></span>
               </div>
-              <input class="slider" type="range" id="s-rate" min="10" max="500" step="5" value="25" aria-label="Monatliche Sparrate" />
-              <div class="calc__scale tnum"><span>10 €</span><span>500 €</span></div>
+              <input class="slider" type="range" id="s-rate" min="25" max="2500" step="25" value="25" aria-label="Monatliche Sparrate" />
+              <div class="calc__scale tnum"><span>25 €</span><span>2.500 €</span></div>
               <p class="calc__hint">25 € - weniger als du für Streaming ausgibst.</p>
             </div>
           </li>
@@ -92,8 +93,8 @@
                 <label for="i-years">Deine Laufzeit</label>
                 <span class="calc__val"><input id="i-years" class="tnum" type="text" inputmode="numeric" value="20" aria-label="Laufzeit in Jahren" /><span class="calc__unit">Jahre</span></span>
               </div>
-              <input class="slider" type="range" id="s-years" min="5" max="40" step="1" value="20" aria-label="Laufzeit in Jahren" />
-              <div class="calc__scale tnum"><span>5</span><span>40</span></div>
+              <input class="slider" type="range" id="s-years" min="5" max="63" step="1" value="20" aria-label="Laufzeit in Jahren" />
+              <div class="calc__scale tnum"><span>5</span><span>63</span></div>
               <p class="calc__hint">Zeit schlägt Timing. Je früher, desto brutaler der Effekt.</p>
             </div>
           </li>
