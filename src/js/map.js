@@ -34,7 +34,7 @@ export function initMap() {
     g.setAttribute("data-city", idx);
     g.setAttribute("tabindex", "0");
     g.setAttribute("role", "img");
-    g.setAttribute("aria-label", `${loc.name} — ${loc.sub}`);
+    g.setAttribute("aria-label", `${loc.name} - ${loc.sub}`);
 
     // Puls nur auf der Home Base — 10+ pulsierende Pins wären unruhig
     if (loc.primary) {
