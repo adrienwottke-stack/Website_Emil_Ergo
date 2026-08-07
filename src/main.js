@@ -11,12 +11,17 @@ import "./styles/base.css";
 import "./styles/components.css";
 import "./styles/sections.css";
 
+import { inject } from "@vercel/analytics";
+
 import { initScroll } from "./js/scroll.js";
 import { initNav } from "./js/nav.js";
 import { initVideoLoop, initHero } from "./js/scrub.js";
 import { initCalculator } from "./js/calculator.js";
 import { initMap } from "./js/map.js";
 import { initWhatsApp, applyConfig } from "./js/whatsapp.js";
+
+// Initialize Vercel Web Analytics
+inject();
 
 initScroll();
 initNav();
