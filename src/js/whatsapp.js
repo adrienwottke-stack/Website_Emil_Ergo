@@ -1,114 +1,98 @@
-/* =========================================================================
-   EMIL · WhatsApp-First-Buchung
-   Baut den wa.me-Link mit vorbefüllter Nachricht aus dem Mini-Interview.
-   Der Nutzer sieht die Nachricht in WhatsApp und entscheidet selbst
-   über das Absenden — hier wird nichts übertragen oder gespeichert.
-   ========================================================================= */
 import { CONFIG } from "../config.js";
 
-const waLink = (text) =>
-  `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`;
+const hasWhatsApp = () => /^\d{8,15}$/.test(CONFIG.whatsappNumber);
+const hasEmail = () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(CONFIG.email) && !CONFIG.email.includes("PLATZHALTER");
+const hasInstagram = () => /^https:\/\/(www\.)?instagram\.com\//.test(CONFIG.instagramUrl) && !CONFIG.instagramUrl.includes("PLATZHALTER");
+const waLink = (text) => `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`;
+
+function configureWhatsAppLink(element, text) {
+  if (!element) return;
+  if (!hasWhatsApp()) {
+    element.setAttribute("aria-disabled", "true");
+    element.removeAttribute("href");
+    return;
+  }
+  element.href = waLink(text);
+  element.removeAttribute("aria-disabled");
+}
 
 export function initWhatsApp() {
+  const baseMessage = "Hey Emil, ich möchte dich und euer Team kennenlernen.";
+  const direct = document.getElementById("waDirect");
   const form = document.getElementById("interviewForm");
-  if (!form) return;
+  const prepared = document.getElementById("waButton");
+  configureWhatsAppLink(direct, baseMessage);
+  if (!form || !prepared) return;
 
-  const ortChips = form.querySelectorAll("[data-ort]");
-  const goalChips = form.querySelectorAll("[data-goal]");
-  const modeChips = form.querySelectorAll("[data-mode]");
-  const waButton = document.getElementById("waButton");
-
-  const state = { ort: "", goals: new Set(), mode: "persönlich" };
-
-  const MODE_PHRASE = {
-    "persönlich": "persönlich sprechen",
-    Videocall: "per Videocall sprechen",
-    schreiben: "erst mal hier schreiben",
+  const state = { ort: "", goals: new Set(), mode: "" };
+  const groups = {
+    ort: Array.from(form.querySelectorAll("[data-ort]")),
+    goals: Array.from(form.querySelectorAll("[data-goal]")),
+    mode: Array.from(form.querySelectorAll("[data-mode]")),
   };
+  const modeText = { persönlich: "persönlich sprechen", Videocall: "per Videocall sprechen", schreiben: "erst einmal schreiben" };
 
-  const buildMessage = () => {
-    const parts = ["Hey Emil!"];
+  const message = () => {
+    const parts = [baseMessage];
     if (state.ort === "Woanders") parts.push("Ich komme nicht direkt aus Dresden oder Leipzig.");
     else if (state.ort) parts.push(`Ich komme aus ${state.ort}.`);
-    if (state.goals.size) parts.push(`Mir geht's gerade vor allem um: ${[...state.goals].join(", ")}.`);
-    parts.push(`Am liebsten würde ich ${MODE_PHRASE[state.mode]}.`);
+    if (state.goals.size) parts.push(`Zuerst möchte ich ${[...state.goals].join(" und ").toLowerCase()}.`);
+    if (state.mode) parts.push(`Am liebsten würde ich ${modeText[state.mode]}.`);
     return parts.join(" ");
   };
-
-  const refresh = () => {
-    waButton.href = waLink(buildMessage());
+  const refresh = () => configureWhatsAppLink(prepared, message());
+  const setPressed = (button, pressed) => {
+    button.classList.toggle("is-active", pressed);
+    button.setAttribute("aria-pressed", String(pressed));
   };
 
-  // Frage 1: Ort — Einfachauswahl, nochmal tippen wählt ab
-  ortChips.forEach((chip) => {
-    chip.addEventListener("click", () => {
-      const ort = chip.dataset.ort;
-      const wasActive = chip.classList.contains("is-active");
-      ortChips.forEach((c) => {
-        c.classList.remove("is-active");
-        c.setAttribute("aria-pressed", "false");
-      });
-      state.ort = wasActive ? "" : ort;
-      if (!wasActive) {
-        chip.classList.add("is-active");
-        chip.setAttribute("aria-pressed", "true");
-      }
-      refresh();
-    });
-  });
-
-  // Frage 2: Ziele — Mehrfachauswahl
-  goalChips.forEach((chip) => {
-    chip.addEventListener("click", () => {
-      const goal = chip.dataset.goal;
-      if (state.goals.has(goal)) {
-        state.goals.delete(goal);
-        chip.classList.remove("is-active");
-      } else {
-        state.goals.add(goal);
-        chip.classList.add("is-active");
-      }
-      refresh();
-    });
-  });
-
-  // Frage 3: Gesprächsform — Einfachauswahl mit Default
-  modeChips.forEach((chip) => {
-    chip.addEventListener("click", () => {
-      modeChips.forEach((c) => {
-        c.classList.remove("is-active");
-        c.setAttribute("aria-pressed", "false");
-      });
-      chip.classList.add("is-active");
-      chip.setAttribute("aria-pressed", "true");
-      state.mode = chip.dataset.mode;
-      refresh();
-    });
-  });
-
+  groups.ort.forEach((button) => button.addEventListener("click", () => {
+    const deselect = button.getAttribute("aria-pressed") === "true";
+    groups.ort.forEach((item) => setPressed(item, false));
+    state.ort = deselect ? "" : button.dataset.ort;
+    if (!deselect) setPressed(button, true);
+    refresh();
+  }));
+  groups.goals.forEach((button) => button.addEventListener("click", () => {
+    const goal = button.dataset.goal;
+    const active = state.goals.has(goal);
+    if (active) state.goals.delete(goal); else state.goals.add(goal);
+    setPressed(button, !active);
+    refresh();
+  }));
+  groups.mode.forEach((button) => button.addEventListener("click", () => {
+    const deselect = button.getAttribute("aria-pressed") === "true";
+    groups.mode.forEach((item) => setPressed(item, false));
+    state.mode = deselect ? "" : button.dataset.mode;
+    if (!deselect) setPressed(button, true);
+    refresh();
+  }));
   refresh();
 }
 
-/** Platzhalter aus der Config in alle data-config-Elemente schreiben */
 export function applyConfig() {
-  document.querySelectorAll("[data-config]").forEach((el) => {
-    switch (el.dataset.config) {
-      case "instagramUrl":
-        el.href = CONFIG.instagramUrl;
-        break;
-      case "instagramHandle":
-        el.textContent = CONFIG.instagramHandle;
-        break;
-      case "email":
-        el.href = `mailto:${CONFIG.email}`;
-        if (el.textContent.includes("[")) el.textContent = CONFIG.email.includes("PLATZHALTER") ? "[E-Mail folgt]" : CONFIG.email;
-        break;
-      case "waPlain": {
-        const isPlaceholder = /X/.test(CONFIG.whatsappNumber);
-        el.href = waLink("Hey Emil! 👋");
-        el.textContent = isPlaceholder ? "WhatsApp: [Nummer folgt]" : `WhatsApp: +${CONFIG.whatsappNumber}`;
-        break;
-      }
-    }
+  document.querySelectorAll('[data-config="instagramUrl"]').forEach((element) => {
+    if (!hasInstagram()) return;
+    element.href = CONFIG.instagramUrl;
+    element.hidden = false;
+  });
+  document.querySelectorAll('[data-config="instagramHandle"]').forEach((element) => {
+    if (!hasInstagram()) return;
+    element.textContent = CONFIG.instagramHandle;
+    element.hidden = false;
+  });
+  document.querySelectorAll('[data-config="email"]').forEach((element) => {
+    if (!hasEmail()) return;
+    element.href = `mailto:${CONFIG.email}`;
+    element.hidden = false;
+  });
+  document.querySelectorAll('[data-config="waPlain"]').forEach((element) => {
+    if (!hasWhatsApp()) { element.hidden = true; return; }
+    element.href = waLink("Hey Emil, ich möchte dich und euer Team kennenlernen.");
+    element.textContent = `WhatsApp: +${CONFIG.whatsappNumber}`;
+    element.hidden = false;
+  });
+  document.querySelectorAll("[data-contact-missing]").forEach((element) => {
+    element.hidden = hasWhatsApp();
   });
 }

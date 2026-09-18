@@ -1,65 +1,36 @@
-# Emil · Recruiting-First Personal Brand — Dresden & Leipzig
+# Emil und sein Team — Weiter. Zusammen.
 
-Cineastischer One-Pager für „Emil“: **Recruiting zuerst** (≈80 %), Klienten subtil (≈20 %).
-Beige · Navy · Gold, Scroll-Scrub-Videos, MSCI-World-Rechenbeispiel, WhatsApp-First-Buchung.
-
-**Harte Leitplanken:** Kein „ERGO“, kein „Versicherung“, keine Vanity-Statistiken auf der
-Marketing-Fläche — Pflichtangaben leben nur auf den `noindex`-Rechtsseiten. Durchgängig **DU**.
+Statische Editorial-Website für Emil und sein Team in Dresden und Leipzig. Die Startseite erzählt zuerst von Team, Entwicklung und gemeinsamer Verantwortung. Die konkrete Tätigkeit in Finanzen, Absicherung und Beratung wird beim Kennenlernen eingeordnet.
 
 ## Stack
 
-- [Vite](https://vitejs.dev) (Multi-Page: `index` + 3 Rechtsseiten) → statisches `dist/` für **Cloudflare Pages**
-- [GSAP + ScrollTrigger](https://gsap.com) (Scroll-Scrub, Pins) · [Lenis](https://lenis.darkroom.engineering) (Smooth-Scroll)
-- Fonts **lokal** via Fontsource (Fraunces · Inter · Archivo) — kein Google-CDN, DSGVO-sauber
+- Vite als statischer Multi-Page-Build
+- lokale variable Schriften: Archivo und Inter
+- semantisches HTML, native Scrollbedienung, scrollgesteuerte Typografiemaske und kleine IntersectionObserver-Reveals
+- eigenständiger Zinsrechner ohne Datenspeicherung
+- WhatsApp-Nachrichtenvorbereitung ohne Formular-Backend
 
-## Entwickeln
+## Lokale Entwicklung
 
 ```bash
 npm install
-npm run dev        # http://localhost:5173
-npm run build      # → dist/
-npm run preview    # Production-Build lokal testen
+npm run dev
+npm run build
+npm run preview
 ```
 
-## Struktur
+Der Produktionsbuild liegt in `dist/`. Direkte Einstiege bestehen für `/`, `/rechner.html`, `/impressum.html`, `/datenschutz.html` und `/erstinformation.html`.
 
-```
-index.html               ← One-Pager (11 Sektionen)
-impressum.html           ← noindex
-datenschutz.html         ← noindex
-erstinformation.html     ← noindex (einzige ERGO-Nennung, § 15 VersVermV)
-src/
-  config.js              ← ALLE Platzhalter zentral (WhatsApp, Instagram, E-Mail, Standorte)
-  main.js / legal.js     ← Entries
-  styles/                ← tokens · base · components · sections · legal
-  js/                    ← scroll · scrub · calculator · msci-data · map · whatsapp
-public/assets/
-  img/                   ← echte Fotos (founder, team) + Ambient-Stills
-  video/                 ← Platzhalter-Loops mit FIXEN Dateinamen (s. unten)
-```
+## Inhalt und Konfiguration
 
-## ✅ Vor dem Livegang (Adrien)
+`src/config.js` ist die zentrale Quelle für WhatsApp, E-Mail, Instagram und die bestätigten Standorte. Ungültige oder erkennbare Platzhalterwerte werden in der Oberfläche nicht verlinkt. Die Kontaktaktion bleibt bis zur Ergänzung echter Daten sichtbar, aber deaktiviert.
 
-1. **`src/config.js` füllen:** WhatsApp-Nummer, Instagram, E-Mail, Standorte.
-2. **Videos 1:1 tauschen** (Dateiname beibehalten, Code bleibt unverändert):
+Der Einstieg „The Life of Emil“ verwendet auf ausdrücklichen Wunsch den vorhandenen Emil-Clip `public/assets/video/hero-placeholder.mp4` mit seinem Poster. Die übrigen früheren Platzhaltervideos werden nicht geladen. Herkunft und Veröffentlichungserlaubnis des Hero-Clips müssen vor dem Livegang bestätigt oder der Clip unter demselben Pfad durch freigegebenes Material ersetzt werden.
 
-| Slot | Datei | Später |
-|---|---|---|
-| Hero-Scrub | `public/assets/video/hero-placeholder.mp4` + `hero-poster.jpg` | echtes Emil/Team-Clip |
-| Intro | `public/assets/video/intro-placeholder.mp4` + `intro-poster.jpg` | echtes Handy-Video (9:16) |
-| Team-Scrub | `public/assets/video/team-placeholder.mp4` + `team-poster.jpg` | echtes Team-Footage |
-| Finale-Scrub | `public/assets/video/finale-placeholder.mp4` + `finale-poster.jpg` | Galerie/Hero-Pose |
+## Veröffentlichung
 
-3. **Echte Stimmen** in Sektion „Erfolgsgeschichten“ (nur freigegebene Zitate!).
-4. **Rechtsseiten**: alle `[Platzhalter]` ersetzen + anwaltlich prüfen lassen.
-5. **`[Emil]`/Namens-Platzhalter** in `index.html` durch echten Namen ersetzen.
+Vor einer Veröffentlichung ist [RELEASE-CHECKLIST.md](./RELEASE-CHECKLIST.md) vollständig abzuarbeiten. Dazu gehören vor allem echte Kontaktdaten, vollständige Pflichtangaben, Aufnahmefreigaben, die zwei zentralen Teammotive und ein belegbarer Datenstand des Rechners.
 
-## Deployment (Cloudflare Pages)
+## Rechner
 
-Build-Command `npm run build`, Output-Verzeichnis `dist`. Fertig — keine Env-Vars nötig.
-
-## Daten-Herkunft Rechner
-
-`src/js/msci-data.js`: MSCI World **Net Total Return in EUR**, Jahresrenditen **2012–2025**
-(verifiziert; Ø ≈ 12,7 % p. a.). Real-Check & Ø-Aussagen rechnen live aus dieser Serie.
-Label „Unverbindliches Rechenbeispiel“ bleibt Pflicht.
+`src/js/msci-data.js` enthält eine hinterlegte Jahresreihe für einen historischen Vergleich. Die Berechnung ist eine Modellrechnung mit nachschüssiger monatlicher Einzahlung und nominalem Monatszins. Datenherkunft und Aktualität müssen vor Veröffentlichung anhand einer belastbaren Primärquelle dokumentiert werden.

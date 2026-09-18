@@ -1,8 +1,7 @@
 /* =========================================================================
    EMIL · Rechenbeispiel (MSCI World)
    Portiert aus dem Alt-Repo: nachschüssige monatliche Verzinsung + SVG-Chart.
-   Neu: 4-Schritte-UI, Rendite-Presets, FOMO-Reframe ("Warten kostet"),
-   Real-Check über die echte MSCI-World-Serie 2012–2025.
+   Vier Schritte, Rendite-Presets und neutraler Laufzeit-/Historienvergleich.
    ========================================================================= */
 import { msciBacktest, MSCI_FIRST_YEAR, MSCI_LAST_YEAR } from "./msci-data.js";
 
@@ -99,8 +98,8 @@ export function initCalculator() {
     chart.innerHTML = `
       <defs>
         <linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#C9A75A" stop-opacity="0.38"/>
-          <stop offset="100%" stop-color="#C9A75A" stop-opacity="0.02"/>
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.22"/>
+          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.01"/>
         </linearGradient>
       </defs>
       <g class="grids">${grid}</g>
@@ -173,15 +172,14 @@ export function initCalculator() {
 
     renderChart(series, animateChart);
 
-    // FOMO-Reframe: Warten kostet + Real-Check mit echten Jahresrenditen
+    // Neutraler Vergleich: fünf Jahre kürzere Laufzeit + hinterlegte Historie
     const lateSeries = compute(v.rate, Math.max(v.years - 5, 0), yieldPct);
     const lateTotal = lateSeries.total[lateSeries.total.length - 1];
     const waitCost = total - lateTotal;
     const real = msciBacktest(v.rate);
     out.fomo.innerHTML =
-      `<b>Warten kostet:</b> Startest du erst in 5 Jahren, fehlen dir am Ende ≈ ${eur0.format(waitCost)}.<br>` +
-      `<b>Real-Check:</b> ${num.format(v.rate)} €/Monat seit ${MSCI_FIRST_YEAR} mit den echten MSCI-World-Jahresrenditen ` +
-      `(bis ${MSCI_LAST_YEAR}) wären heute ≈ ${eur0.format(real.total)} - eingezahlt: ${eur0.format(real.paid)}.`;
+      `<b>Laufzeitvergleich:</b> Bei fünf Jahren kürzerer Laufzeit liegt das rechnerische Ergebnis mit denselben Annahmen um etwa ${eur0.format(waitCost)} niedriger.<br>` +
+      `<b>Historischer Vergleich:</b> ${num.format(v.rate)} €/Monat von ${MSCI_FIRST_YEAR} bis ${MSCI_LAST_YEAR} ergeben mit der hinterlegten MSCI-World-Jahresreihe etwa ${eur0.format(real.total)}; eingezahlt wären ${eur0.format(real.paid)}.`;
   }
 
   // Slider ↔ Eingabefeld synchron halten
@@ -208,9 +206,14 @@ export function initCalculator() {
 
   // Rendite-Presets
   $$(".preset").forEach((btn) => {
+    btn.setAttribute("aria-pressed", String(btn.classList.contains("is-active")));
     btn.addEventListener("click", () => {
-      $$(".preset").forEach((b) => b.classList.remove("is-active"));
+      $$(".preset").forEach((b) => {
+        b.classList.remove("is-active");
+        b.setAttribute("aria-pressed", "false");
+      });
       btn.classList.add("is-active");
+      btn.setAttribute("aria-pressed", "true");
       yieldPct = parseFloat(btn.dataset.yield);
       yieldLabel.innerHTML = `${num.format(yieldPct)}&nbsp;%`;
       update(false);

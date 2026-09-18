@@ -1,6 +1,5 @@
-/* Rechtsseiten: Fonts lokal + Basis-Styles, keine Animationen */
-import "@fontsource-variable/fraunces";
 import "@fontsource-variable/inter";
+import "@fontsource-variable/archivo";
 import "./styles/tokens.css";
 import "./styles/base.css";
 import "./styles/components.css";

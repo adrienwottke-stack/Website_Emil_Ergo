@@ -24,6 +24,5 @@ export const CONFIG = {
   locations: [
     { name: "Dresden", sub: "Home Base", lon: 13.7373, lat: 51.0504, primary: true, above: true },
     { name: "Leipzig", sub: "im Aufbau", lon: 12.3731, lat: 51.3397, above: true },
-    { name: "Bald du?", sub: "dein Standort", lon: 12.1405, lat: 54.0924, soon: true, above: true },
   ],
 };

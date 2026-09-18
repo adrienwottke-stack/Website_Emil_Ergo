@@ -21,3 +21,6 @@ Desktop.ini
 
 # Identity-Referenzfotos fuer Higgsfield (nicht deployen, nicht committen)
 assets/identity/
+
+.vercel
+.env*

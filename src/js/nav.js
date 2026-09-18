@@ -1,7 +1,4 @@
-/* =========================================================================
-   EMIL · Nav — Mobile-Overlay (Burger) + Scrollspy für die Anker-Links
-   ========================================================================= */
-import { lenis } from "./scroll.js";
+const MOBILE_QUERY = "(max-width: 900px)";
 
 export function initNav() {
   const nav = document.getElementById("nav");
@@ -9,64 +6,56 @@ export function initNav() {
   const menu = document.getElementById("navMenu");
   if (!nav || !burger || !menu) return;
 
-  const root = document.documentElement;
+  const media = window.matchMedia(MOBILE_QUERY);
+  const focusables = () => Array.from(menu.querySelectorAll("a[href]:not([hidden])"));
   const isOpen = () => nav.classList.contains("menu-open");
 
-  let closeTimer = 0;
-  const setOpen = (open) => {
+  const setOpen = (open, restoreFocus = false) => {
     nav.classList.toggle("menu-open", open);
-    // menu-closing hält die Ausblend-Transition am Leben (CSS animiert nur
-    // über diese beiden Klassen, damit Breakpoint-Resizes nicht flackern)
-    clearTimeout(closeTimer);
-    if (open) {
-      nav.classList.remove("menu-closing");
-    } else {
-      nav.classList.add("menu-closing");
-      closeTimer = setTimeout(() => nav.classList.remove("menu-closing"), 460);
-    }
-    root.classList.toggle("nav-lock", open);
+    document.documentElement.classList.toggle("nav-lock", open);
     burger.setAttribute("aria-expanded", String(open));
-    if (lenis) (open ? lenis.stop() : lenis.start());
+    burger.setAttribute("aria-label", open ? "Menü schließen" : "Menü öffnen");
+    if (media.matches) menu.setAttribute("aria-hidden", String(!open));
+    else menu.removeAttribute("aria-hidden");
+    if (open) focusables()[0]?.focus();
+    if (!open && restoreFocus) burger.focus();
   };
 
-  burger.addEventListener("click", () => setOpen(!isOpen()));
-
-  // Capture-Phase: Menü schließt (und Lenis läuft wieder), bevor der
-  // Anker-Handler aus scroll.js das sanfte Scrollen startet.
-  menu.addEventListener(
-    "click",
-    (e) => {
-      if (e.target.closest("a") && isOpen()) setOpen(false);
-    },
-    true
-  );
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && isOpen()) {
-      setOpen(false);
-      burger.focus();
+  burger.addEventListener("click", () => setOpen(!isOpen(), isOpen()));
+  menu.addEventListener("click", (event) => {
+    if (event.target.closest("a") && media.matches) setOpen(false);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (!isOpen()) return;
+    if (event.key === "Escape") {
+      setOpen(false, true);
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const items = [...focusables(), burger];
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault(); last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault(); first.focus();
     }
   });
+  media.addEventListener("change", () => setOpen(false));
+  setOpen(false);
 
-  // Scrollspy: aktiven Abschnitt markieren (greift nur auf dem One-Pager)
   const links = Array.from(menu.querySelectorAll('.nav__link[href^="#"]'));
-  const byTarget = new Map();
-  links.forEach((a) => {
-    const target = document.querySelector(a.getAttribute("href"));
-    if (target) byTarget.set(target, a);
+  const targets = new Map();
+  links.forEach((link) => {
+    const target = document.querySelector(link.getAttribute("href"));
+    if (target) targets.set(target, link);
   });
-  if (!byTarget.size || !("IntersectionObserver" in window)) return;
-
-  const spy = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        links.forEach((l) => l.classList.remove("is-current"));
-        const link = byTarget.get(entry.target);
-        if (link) link.classList.add("is-current");
-      });
-    },
-    { rootMargin: "-30% 0px -55% 0px", threshold: 0 }
-  );
-  byTarget.forEach((_, target) => spy.observe(target));
+  if (!("IntersectionObserver" in window)) return;
+  const spy = new IntersectionObserver((entries) => {
+    const visible = entries.find((entry) => entry.isIntersecting);
+    if (!visible) return;
+    links.forEach((link) => link.classList.remove("is-current"));
+    targets.get(visible.target)?.classList.add("is-current");
+  }, { rootMargin: "-30% 0px -60% 0px" });
+  targets.forEach((_, target) => spy.observe(target));
 }

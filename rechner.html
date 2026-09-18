@@ -3,175 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Rechner · Was früh starten möglich macht — Emil</title>
-  <meta name="description" content="Sparrate, Laufzeit, echte MSCI-World-Daten: Rechne in 30 Sekunden aus, was möglich ist, wenn du früh startest. Unverbindliches Rechenbeispiel." />
-  <meta name="theme-color" content="#F3EDE1" />
-
-  <!-- Open Graph -->
+  <title>Zinsrechner · Emil und sein Team</title>
+  <meta name="description" content="Ein unverbindliches Rechenbeispiel für Sparrate, Laufzeit und eine frei gewählte Renditeannahme." />
+  <meta name="theme-color" content="#ffffff" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Emil · Der Rechner: Was früh starten möglich macht." />
-  <meta property="og:description" content="Sparrate, Laufzeit, echte MSCI-World-Daten - rechne selbst, was möglich ist." />
-  <meta property="og:image" content="/assets/img/og-image.jpg" />
+  <meta property="og:title" content="Zinsrechner · Emil und sein Team" />
+  <meta property="og:description" content="Sparrate, Laufzeit und Renditeannahme als transparentes Rechenbeispiel." />
   <meta property="og:locale" content="de_DE" />
-
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <script type="module" src="/src/main.js"></script>
 </head>
 <body class="page-rechner">
   <a href="#main" class="skip-link">Zum Inhalt springen</a>
-
-  <!-- ===================== NAV ===================== -->
   <header class="nav" id="nav">
-    <div class="container nav__inner">
-      <a href="/" class="nav__brand" aria-label="Emil - zur Startseite">Emil<span class="nav__dot">.</span></a>
-
+    <div class="nav__inner">
+      <a href="/" class="nav__brand" aria-label="Emil und sein Team – zur Startseite">Emil</a>
       <nav class="nav__menu" id="navMenu" aria-label="Hauptnavigation">
         <ul class="nav__links" role="list">
-          <li><a class="nav__link" href="/#ich">Über Emil</a></li>
           <li><a class="nav__link" href="/#team">Team</a></li>
-          <li><a class="nav__link" href="/#bekommst">Möglichkeiten</a></li>
-          <li><a class="nav__link" href="/#standorte">Standorte</a></li>
-          <li><a class="nav__link" href="/#ablauf">Ablauf</a></li>
-          <li><a class="nav__link nav__link--page" href="/rechner.html" aria-current="page">Zinsrechner</a></li>
+          <li><a class="nav__link" href="/#ich">Emil</a></li>
+          <li><a class="nav__link" href="/#einblicke">Einblicke</a></li>
+          <li><a class="nav__link" href="/#kennenlernen">Kennenlernen</a></li>
         </ul>
-        <div class="nav__menu-extra">
-          <a href="/#termin" class="btn btn--ondark btn--lg">Schreib Emil</a>
-          <a class="nav__menu-ig" href="https://instagram.com/PLATZHALTER_INSTAGRAM" target="_blank" rel="noopener" data-config="instagramUrl">Instagram</a>
-        </div>
+        <div class="nav__secondary"><a href="/rechner.html" aria-current="page">Zinsrechner</a><a href="#" target="_blank" rel="noopener" data-config="instagramUrl" hidden>Instagram</a></div>
       </nav>
-
-      <div class="nav__actions">
-        <a class="nav__ig" href="https://instagram.com/PLATZHALTER_INSTAGRAM" target="_blank" rel="noopener" aria-label="Emil auf Instagram" data-config="instagramUrl">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
-        </a>
-        <a href="/#termin" class="btn btn--ghost nav__cta">Schreib Emil</a>
-        <button class="nav__burger" id="navBurger" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Menü">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </button>
-      </div>
+      <div class="nav__actions"><a href="/#kennenlernen" class="nav__contact">Schreib Emil</a><button class="nav__burger" id="navBurger" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Menü öffnen"><span aria-hidden="true"></span><span aria-hidden="true"></span></button></div>
     </div>
   </header>
 
   <main id="main">
-
-  <!-- ===================== INTRO ===================== -->
-  <section class="rechner-intro" aria-labelledby="rechner-title">
-    <div class="container">
-      <div class="section-head center">
-        <p class="eyebrow eyebrow--center">Rechenbeispiel</p>
-        <h1 id="rechner-title">Was möglich ist, wenn du früh startest — und mit den <em>Richtigen</em>.</h1>
-        <p class="lead">Vier Schritte. Echte Marktdaten. Keine Märchen.</p>
+    <section class="rechner-intro" aria-labelledby="rechner-title">
+      <div class="section-head">
+        <p class="section-label eyebrow">Rechenbeispiel</p>
+        <h1 id="rechner-title">Was Zeit und regelmäßiges Sparen verändern können.</h1>
+        <p class="lead">Wähle deine Werte. Das Ergebnis ist eine mathematische Modellrechnung und keine Prognose.</p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===================== RECHNER (MSCI World, Navy) ===================== -->
-  <section class="section section--dark rechner" id="rechner" aria-label="Rechner: Eingaben und Ergebnis">
-    <span class="seam seam--top" aria-hidden="true"></span>
-    <div class="container">
-      <div class="calc" data-reveal="scale">
+    <section class="section--dark rechner" id="rechner" aria-label="Rechner: Eingaben und Ergebnis">
+      <div class="calc" data-reveal>
         <ol class="calc__steps" role="list">
-          <!-- Schritt 1: Rate -->
           <li class="calc__step">
             <span class="calc__stepnum tnum">1</span>
             <div class="calc__field">
-              <div class="calc__fieldtop">
-                <label for="i-rate">Dein monatlicher Start</label>
-                <span class="calc__val"><input id="i-rate" class="tnum" type="text" inputmode="numeric" value="25" aria-label="Monatliche Sparrate in Euro" /><span class="calc__unit">€</span></span>
-              </div>
+              <div class="calc__fieldtop"><label for="i-rate">Monatliche Sparrate</label><span class="calc__val"><input id="i-rate" class="tnum" type="text" inputmode="numeric" value="25" aria-label="Monatliche Sparrate in Euro" /><span class="calc__unit">€</span></span></div>
               <input class="slider" type="range" id="s-rate" min="25" max="2500" step="25" value="25" aria-label="Monatliche Sparrate" />
               <div class="calc__scale tnum"><span>25 €</span><span>2.500 €</span></div>
-              <p class="calc__hint">25 € - weniger als du für Streaming ausgibst.</p>
+              <p class="calc__hint">Passe den Betrag an deine eigene Modellrechnung an.</p>
             </div>
           </li>
-          <!-- Schritt 2: Laufzeit -->
           <li class="calc__step">
             <span class="calc__stepnum tnum">2</span>
             <div class="calc__field">
-              <div class="calc__fieldtop">
-                <label for="i-years">Deine Laufzeit</label>
-                <span class="calc__val"><input id="i-years" class="tnum" type="text" inputmode="numeric" value="20" aria-label="Laufzeit in Jahren" /><span class="calc__unit">Jahre</span></span>
-              </div>
+              <div class="calc__fieldtop"><label for="i-years">Laufzeit</label><span class="calc__val"><input id="i-years" class="tnum" type="text" inputmode="numeric" value="20" aria-label="Laufzeit in Jahren" /><span class="calc__unit">Jahre</span></span></div>
               <input class="slider" type="range" id="s-years" min="5" max="63" step="1" value="20" aria-label="Laufzeit in Jahren" />
               <div class="calc__scale tnum"><span>5</span><span>63</span></div>
-              <p class="calc__hint">Zeit schlägt Timing. Je früher, desto brutaler der Effekt.</p>
+              <p class="calc__hint">Die Berechnung nimmt regelmäßige monatliche Einzahlungen an.</p>
             </div>
           </li>
-          <!-- Schritt 3: Rendite -->
           <li class="calc__step">
             <span class="calc__stepnum tnum">3</span>
             <div class="calc__field">
-              <div class="calc__fieldtop">
-                <label id="l-yield">Deine Annahme pro Jahr</label>
-                <span class="calc__val tnum" id="v-yield">12&nbsp;%</span>
-              </div>
+              <div class="calc__fieldtop"><label id="l-yield">Angenommene Rendite pro Jahr</label><span class="calc__val tnum" id="v-yield">12&nbsp;%</span></div>
               <div class="calc__presets" role="group" aria-labelledby="l-yield">
-                <button type="button" class="preset tnum" data-yield="5">5 % <small>vorsichtig</small></button>
-                <button type="button" class="preset tnum" data-yield="8">8 % <small>moderat</small></button>
-                <button type="button" class="preset tnum is-active" data-yield="12">12 % <small>MSCI World ’12–’25</small></button>
+                <button type="button" class="preset tnum" data-yield="5">5 % <small>Beispiel</small></button>
+                <button type="button" class="preset tnum" data-yield="8">8 % <small>Beispiel</small></button>
+                <button type="button" class="preset tnum is-active" data-yield="12">12 % <small>historischer Vergleich</small></button>
               </div>
-              <p class="calc__hint">Der MSCI World (Welt-Aktienindex, in Euro) hat 2012–2025 im Schnitt
-              rund 12&nbsp;% pro Jahr gemacht.* Vergangenheit garantiert keine Zukunft - aber sie zeigt, was möglich war.</p>
+              <p class="calc__hint">Die auswählbaren Werte sind Annahmen. Vergangene Wertentwicklungen sagen keine zukünftige Rendite voraus.</p>
             </div>
           </li>
-          <!-- Schritt 4: Ergebnis -->
           <li class="calc__step calc__step--result">
-            <span class="calc__stepnum calc__stepnum--gold tnum">4</span>
+            <span class="calc__stepnum tnum">4</span>
             <div class="calc__result">
-              <p class="calc__resultlabel">Dein mögliches Ergebnis</p>
+              <p class="calc__resultlabel">Ergebnis der Modellrechnung</p>
               <p class="calc__amount tnum" id="r-amount" aria-live="polite">0&nbsp;€</p>
-              <div class="calc__split tnum">
-                <span><i class="dot dot--paid"></i>Eingezahlt <b id="r-paid">0&nbsp;€</b></span>
-                <span><i class="dot dot--gain"></i>Marktertrag <b id="r-gain">0&nbsp;€</b></span>
-              </div>
-
-              <div class="calc__chart">
-                <svg id="chart" viewBox="0 0 560 300" role="img" aria-label="Liniendiagramm: Entwicklung von Einzahlungen und Gesamtvermögen über die Laufzeit."></svg>
-                <div class="chart-tip tnum" id="chartTip" role="status" aria-live="off"></div>
-              </div>
-
+              <div class="calc__split tnum"><span><i class="dot dot--paid"></i>Eingezahlt <b id="r-paid">0&nbsp;€</b></span><span><i class="dot dot--gain"></i>Rechnerischer Ertrag <b id="r-gain">0&nbsp;€</b></span></div>
+              <div class="calc__chart"><svg id="chart" viewBox="0 0 560 300" role="img" aria-label="Liniendiagramm: Entwicklung von Einzahlungen und rechnerischem Gesamtwert über die Laufzeit."></svg><div class="chart-tip tnum" id="chartTip" role="status" aria-live="off"></div></div>
               <p class="calc__fomo" id="r-fomo" aria-live="polite"></p>
-
-              <a href="/#termin" class="btn btn--gold btn--full">Schreib Emil</a>
-              <p class="calc__disclaimer"><strong>Unverbindliches Rechenbeispiel.</strong> Keine Anlage-, Steuer- oder
-              Rechtsberatung, keine Renditegarantie. Kosten &amp; Steuern nicht berücksichtigt.
-              *Quelle: MSCI World Net Total Return in EUR, Jahresrenditen 2012–2025 (Ø ≈ 12,7&nbsp;% p.&nbsp;a.).
-              Wertentwicklungen der Vergangenheit sind kein verlässlicher Indikator für die Zukunft.</p>
+              <a href="/#kennenlernen" class="btn btn--full">Mehr über das Team erfahren</a>
+              <p class="calc__disclaimer"><strong>Unverbindliches Rechenbeispiel.</strong> Keine Anlage-, Steuer- oder Rechtsberatung, keine Renditegarantie. Kosten und Steuern sind nicht berücksichtigt. Die historische Vergleichsrechnung verwendet hinterlegte Jahresrenditen des MSCI World Net Total Return in EUR für 2012–2025. Die Herkunft und Aktualität der Daten sind vor einer Veröffentlichung abschließend zu belegen. Wertentwicklungen der Vergangenheit sind kein verlässlicher Indikator für die Zukunft.</p>
             </div>
           </li>
         </ol>
       </div>
-    </div>
-    <div class="grain" aria-hidden="true"></div>
-    <span class="seam seam--bottom" aria-hidden="true"></span>
-  </section>
-
+    </section>
   </main>
 
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="footer section--block">
-    <div class="container">
-      <div class="footer__main">
-        <a class="footer__ig" href="https://instagram.com/PLATZHALTER_INSTAGRAM" target="_blank" rel="noopener" data-config="instagramUrl">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
-          <span data-config="instagramHandle">@[instagram-handle]</span>
-        </a>
-        <p class="footer__igsub">Der schnellste Weg in meine Welt. Stories, Team, Alltag - echt statt Hochglanz.</p>
-      </div>
-      <div class="footer__meta">
-        <div class="footer__contact">
-          <a href="#" id="footerWa" data-config="waPlain">WhatsApp: [Nummer folgt]</a>
-          <a href="mailto:PLATZHALTER@MAIL.DE" data-config="email">[E-Mail folgt]</a>
-        </div>
-        <nav class="footer__legal" aria-label="Rechtliches">
-          <a href="/impressum.html">Impressum</a>
-          <a href="/datenschutz.html">Datenschutz</a>
-          <a href="/erstinformation.html">Erstinformation</a>
-        </nav>
-      </div>
-      <p class="footer__copy">© <span id="year">2026</span> Emil · [Vollständiger Name &amp; Anschrift folgen]</p>
+  <footer class="footer">
+    <div class="footer__wordmark" aria-hidden="true">Emil</div>
+    <div class="footer__grid">
+      <p>Team &amp; Entwicklung<br />Dresden · Leipzig</p>
+      <nav aria-label="Kontakt und weitere Seiten"><a href="/#kennenlernen">Kennenlernen</a><a href="/">Startseite</a><a href="#" target="_blank" rel="noopener" data-config="instagramUrl" hidden>Instagram</a><a href="#" data-config="email" hidden>E-Mail</a></nav>
+      <nav aria-label="Rechtliches"><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutz</a><a href="/erstinformation.html">Erstinformation</a></nav>
     </div>
+    <p class="footer__copy">© <span id="year">2026</span> Emil</p>
   </footer>
 </body>
 </html>
